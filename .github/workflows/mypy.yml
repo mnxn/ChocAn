@@ -1,11 +1,11 @@
-name: mypy typecheck
+name: mypy
 
 on: [push]
 
 jobs:
   typecheck:
     runs-on: ubuntu-latest
-    name: mypy typecheck
+    name: typecheck
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v4
