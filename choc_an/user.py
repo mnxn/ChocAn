@@ -9,7 +9,7 @@ class User(ABC):
         pass
 
     @abstractmethod
-    def receive_report(report: report.Report) -> None:
+    def receive_report(self, report: report.Report) -> None:
         pass
 
 
@@ -30,7 +30,7 @@ class Manager(User):
     def __init__(self, name: str) -> None:
         pass
 
-    def receive_report(report: report.Report) -> None:
+    def receive_report(self, report: report.Report) -> None:
         pass
 
 
@@ -49,7 +49,7 @@ class Member(UserAccount):
     ) -> None:
         pass
 
-    def receive_report(report: report.Report) -> None:
+    def receive_report(self, report: report.Report) -> None:
         pass
 
 
@@ -59,5 +59,5 @@ class Provider(UserAccount):
     ) -> None:
         pass
 
-    def receive_report(report: report.Report) -> None:
+    def receive_report(self, report: report.Report) -> None:
         pass

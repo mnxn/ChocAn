@@ -3,7 +3,7 @@ import user
 
 
 class ProviderTerminal:
-    system: system.System
+    current_system: system.System
     current_provider: user.Provider
     current_member: user.Member
 
@@ -33,7 +33,7 @@ class ProviderTerminal:
 
 
 class ManagerTerminal(ProviderTerminal):
-    system: system.System
+    current_system: system.System
     current_manager: user.Manager
 
     def __init__(self, system: system.System) -> None:

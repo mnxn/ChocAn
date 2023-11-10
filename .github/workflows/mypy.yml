@@ -12,4 +12,4 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install mypy
-      - run: mypy choc_an
+      - run: mypy choc_an --disable-error-code empty-body
