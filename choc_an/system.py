@@ -12,7 +12,13 @@ class System:
     record_list: list[service.Record]
 
     def __init__(self, path: str) -> None:
-        pass
+        self.path = path
+        self.member_list = []
+        self.provider_list = []
+        self.manager_list = []
+        self.service_list = []
+        self.record_list = []
+        self.load_files()
 
     def load_files(self) -> None:
         pass

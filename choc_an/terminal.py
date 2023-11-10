@@ -4,11 +4,13 @@ from . import user
 
 class ProviderTerminal:
     current_system: system.System
-    current_provider: user.Provider
-    current_member: user.Member
+    current_provider: user.Provider | None
+    current_member: user.Member | None
 
     def __init__(self, system: system.System) -> None:
-        pass
+        self.current_system = system
+        self.current_provider = None
+        self.current_member = None
 
     def login_provider(self) -> None:
         pass
@@ -33,11 +35,11 @@ class ProviderTerminal:
 
 
 class ManagerTerminal(ProviderTerminal):
-    current_system: system.System
-    current_manager: user.Manager
+    current_manager: user.Manager | None
 
     def __init__(self, system: system.System) -> None:
-        pass
+        super().__init__(system)
+        self.current_manager = None
 
     def login_manager(self) -> None:
         pass
