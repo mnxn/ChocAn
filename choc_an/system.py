@@ -47,7 +47,7 @@ class System:
     def lookup_provider(self, id: int) -> user.Provider:
         pass
 
-    def lookup_manager(self, id: int) -> user.Manager:
+    def lookup_manager(self, name: str) -> user.Manager:
         pass
 
     def lookup_service(self, code: int) -> service.Service:
