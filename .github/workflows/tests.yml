@@ -1,15 +1,14 @@
-name: mypy
+name: tests
 
 on: [push]
 
 jobs:
-  typecheck:
+  unit_tests:
     runs-on: ubuntu-latest
-    name: typecheck
+    name: unit tests
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v4
         with:
           python-version: "3.12"
-      - run: pip install mypy
-      - run: mypy choc_an test_choc_an.py --disable-error-code empty-body
+      - run: python test_choc_an.py
