@@ -1,7 +1,7 @@
 from decimal import Decimal
-import report
-import user
-import service
+from . import report
+from . import user
+from . import service
 
 
 class MemberReport(report.Report):

@@ -1,6 +1,6 @@
-import user
-import service
-import reports
+from . import user
+from . import service
+from . import reports
 
 
 class System:

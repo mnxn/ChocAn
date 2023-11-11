@@ -1,6 +1,6 @@
 from decimal import Decimal
 from datetime import datetime
-import user
+from . import user
 
 
 class Service:

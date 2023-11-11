@@ -1,5 +1,5 @@
-import system
-import user
+from . import system
+from . import user
 
 
 class ProviderTerminal:

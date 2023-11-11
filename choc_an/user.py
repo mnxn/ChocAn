@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-import report
+from . import report
 
 
 class User(ABC):
