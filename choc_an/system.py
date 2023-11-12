@@ -7,11 +7,7 @@ import json
 import array
 
 
-#Date 11/10/2023 or etc, however this file is not finshed, until record service.
-#Another thing, member_list is made of json data, not classes of the datas
-#which can be changed, Another thing, instead of saving the entire list in one file
-#they are saved by user ids, in the folders belonging to member/provider/etc
-#which can be changed.
+
 class System:
     path: str
     member_list: list[user.Member]
@@ -29,21 +25,14 @@ class System:
         self.record_list = []
         self.load_files()
 	
-    def load_files_array(self, path):
-        if (os.path.exists(path) == 0):
-            return None
-        jsons_files = []
-        for file_data in glob.glob(os.path.join(path, '*.json')):
-            with open(os.path.join(os.get.cwd(), file_data, 'r')) as current_data:
-                jsons_files += [ json.loads(current_data) ]
-        return jsons_files
+
     
     def load_files(self) -> None:
-        self.member_list = self.load_files_array(self.path + '/member_list')
-        self.provider_list = self.load_files_array(self.path + '/provider_list')
-        self.manager_list = self.load_files_array(self.path + '/manager_list')
-        self.service_list = self.load_files_array(self.path + '/service_list')
-        self.record_list = self.load_files_array(self.path + '/record_list')
+        self.load_members()
+        self.load_provider()
+        self.load_managers()
+        self.load_services()
+        self.load_records()
 		
     #Another argument can be added to import certain type of files ex .tx
 
@@ -51,31 +40,19 @@ class System:
 
     def write_files(self) -> None:
         if (len(self.member_list)):
-            self.write_data(self.members_json(self.member_list), self.path + '/member_list')
+            self.write_data(self.members_to_json(self.member_list), self.path + '/member/members.json')
 		
         if (len(self.provider_list)):
-            self.write_data(self.providers_json(self.provider_list), self.path + '/provider_list')
+            self.write_data(self.providers_to_json(self.provider_list), self.path + '/provider/providers.json')
 		
         if (len(self.manager_list)):
-            self.write_data(self.managers_json(self.manager_list), self.path + '/manager_list')
+            self.write_data(self.managers_to_json(self.manager_list), self.path + '/manager/managers.json')
 			
         if (len(self.service_list)):
-            self.write_data(self.services_json(self.service_list), self.path + '/service_list')
+            self.write_data(self.services_to_json(self.service_list), self.path + '/service/services.json')
 			
-        #This part can be changed, unlike the tops, this might override files because of the
-        #naming of the files
         if (len(self.record_list)):
-            self.write_files_array(self.record_list, self.path + '/record_list', 'service_date_time')
-	
-
-			
-    def write_data(self, save_data, path):
-        type_write = 'w'
-        if (os.path.exists(path)):
-            type_write = 'x'
-        with open(path, type_write, encodeing='utf-8') as data_location:
-            json.dump(save_data, data_location, ensure_ascii=False, indent=4)
-
+            self.write_data(self.records_to_json(self.record_list), self.path+'/record/records')
 		
 
     def add_member(self, new_member: user.Member) -> None:
@@ -157,3 +134,181 @@ class System:
 
     def weekly_actions(self) -> None:
         pass
+
+    def members_to_json(self, convert: user.Member) -> dict:
+        json_data = []
+        for data in convert:
+            json_data += [self.member_to_json(data)]
+        return json_data
+    
+    def member_to_json(self, convert: user.Member) -> dict:
+        json_data = '{ "name":null, "id":null, "address":null, "city":null, "state":null, "zip_code":null, "suspended":null}'
+        json_data = json.loads(json_data)
+        json_data["name"] = convert.name
+        json_data["id"] = convert.id
+        json_data["address"] = convert.address
+        json_data["city"] = convert.city
+        json_data["state"] = convert.state
+        json_data["zip_code"] = convert.zip_code
+        json_data["suspended"] = convert.suspended
+
+        return json_data
+    
+    def json_to_members(self, convert: list[dict]) -> list[user.Member]:
+        hold_list = []
+        for data in convert:
+            hold_list += [self.json_to_member(data)]
+        return hold_list
+
+    def json_to_member(self, convert: dict) -> user.Member:
+        return user.Member(convert["name"], convert["id"], convert["address"], convert["city"], convert["state"], convert["zip_code"], convert["suspended"])
+
+    def providers_to_json(self, convert: list[user.Provider]) -> dict:
+        json_data = []
+        for data in convert:
+            json_data += [self.provider_to_json(convert)]
+        return json_data
+
+    def provider_to_json(self, convert: user.Provider) -> dict:
+        json_data = '{ "name":null, "id":null, "address":null, "city":null, "state":null, "zip_code":null}'
+        json_data = json.loads(json_data)
+        json_data["name"] = convert.name
+        json_data["id"] = convert.id
+        json_data["address"] = convert.address
+        json_data["city"] = convert.city
+        json_data["state"] = convert.state
+        json_data["zip_code"] = convert.zip_code
+
+        return json_data
+    
+    def json_to_providers(self, convert: list[dict]) -> list[user.Provider]:
+        hold_list = []
+        for data in convert:
+            hold_list += [self.json_to_provider(data)]
+        return hold_list
+
+    def json_to_provider(self, convert: dict) -> user.Provider:
+        return user.Provider(convert["name"], convert["id"], convert["address"], convert["city"], convert["state"], convert["zip_code"])
+
+    def managers_to_json(self, convert: list[user.Manager]) -> dict:
+        json_hold = []
+        for data in convert:
+            json_hold += [self.manager_to_json(data)]
+        return json_hold
+    
+    def manager_to_json(self, convert: user.Manager) -> dict:
+        json_data = '{ "name":null}'
+        json_data = json.loads(json_data)
+        json_data["name"] = convert.name
+        
+        return json_data
+    
+    def json_to_managers(self, convert: list[dict]) -> list[user.Manager]:
+        hold_list = []
+        for data in convert:
+            hold_list += [json_to_manager(data)]
+        
+        return hold_list
+    
+    def json_to_manager(self, convert: dict) -> user.Manager:
+        return user.Manager(convert["name"])
+    
+    def services_to_json(self, convert: list[service.Service]) -> list[dict]:
+        json_list = []
+        for data in convert:
+            json_list += [self.service_to_json(data)]
+        
+        return json_list
+    
+    def service_to_json(self, convert: service.Service) -> dict:
+        json_data = '{"name":null, "code":null, "fee":null}'
+        json_data = json.loads(json_data)
+        json_data["name"] = convert.name
+        json_data["code"] = convert.code
+        json_data["fee"] = convert.fee
+
+        return json_data
+    
+    def json_to_services(self, convert: list[dict]) -> list[service.Service]:
+        hold_list = []
+        for data in convert:
+            hold_list += [self.json_to_service(data)]
+        return hold_list
+    
+    def json_to_service(self, convert: dict) -> service.Service:
+        return service.Service(convert["name"], convert["code"], convert["fee"])
+    
+    def records_to_json(self, convert: list[service.Record]) -> list[dict]:
+        json_hold = []
+        for data in convert:
+            json_hold += [self.record_to_json(data)]
+        
+        return json_hold
+    
+    def record_to_json(self, convert: service.Record) -> dict:
+        json_data = '{ "current_date_time":null, "service_date_time":null, "provider":null, "member":null, "service":null, "comments":null }'
+        json_data = json.loads(json_data)
+        json_data["current_data_time"] = convert.current_date_time
+        json_data["service_data_time"] = convert.service_date_time
+        json_data["provider"] = self.provider_to_json(convert.provider)
+        json_data["member"] = self.member_to_json(convert.member)
+        json_data["service"] = self.service_to_json(convert.service)
+        json_data["comments"] = convert.comments
+
+        return json_data
+    
+    def json_to_records(self, convert: list[dict]) -> list[service.Record]:
+        hold_list = []
+        for data in convert:
+            hold_list += [self.json_to_record(data)]
+        
+        return hold_list
+    
+    def json_to_record(self, convert: dict) -> service.Record:
+        member_data = self.json_to_member(convert["member"])
+        provider_data = self.json_to_provider(convert["provider"])
+        service_data = self.json_to_service(convert["service"])
+
+        return service.Record(convert["service_date_time"], provider_data, member_data, service_data, convert["comments"])
+    
+
+
+    #load and save data
+
+    def load_members(self) -> None:
+        if (os.path.exists(self.path + '/member/members.json')):
+            with open(self.path + '/member/members.json', 'r') as data:
+                data = json.loads(data)
+                self.member_list = self.json_to_members(data)
+
+    def load_providers(self) -> None:
+        if (os.path.exists(self.path + '/provider/providers.json')):
+            with open(self.path + '/provider/providers.json', 'r') as data:
+                data = json.loads(data)
+                self.provider_list = self.json_to_providers(data)
+
+    def load_mangers(self) -> None:
+        if (os.path.exists(self.path + '/manger/mangers.json')):
+            with open(self.path + '/manger/mangers.json', 'r') as data:
+                data = json.loads(data)
+                self.manger_list = self.json_to_mangers(data)
+
+    def load_services(self) -> None:
+        if (os.path.exists(self.path + '/service/services.json')):
+            with open(self.path + '/service/services.json', 'r') as data:
+                data = json.loads(data)
+                self.service_list = self.json_to_services(data)
+
+    def load_records(self) -> None:
+        if (os.path.exists(self.path + '/record/records.json')):
+            with open(self.path + '/record/records.json', 'r') as data:
+                data = json.loads(data)
+                self.record_list = self.json_to_records(data)
+
+
+    def write_data(self, save_data: list[dict], path: str):
+        type_write = 'w'
+        if (os.path.exists(path)):
+            type_write = 'x'
+        with open(path, type_write, encodeing='utf-8') as data_location:
+            json.dump(save_data, data_location, ensure_ascii=False, indent=4)
