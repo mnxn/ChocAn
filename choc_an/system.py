@@ -5,9 +5,9 @@ import os
 import glob
 import json
 import array
-from datetime import datetime
+
 from io import open
-#Date time needed for 251
+
 
 
 class System:
@@ -314,5 +314,5 @@ class System:
         type_write: str = 'w'
         if (os.path.exists(path)):
             type_write = 'x'
-        with open(path, type_write, encodeing="utf-8") as data_location:
+        with open(path, type_write) as data_location:
             json.dump(save_data, data_location, ensure_ascii=False, indent=4)
