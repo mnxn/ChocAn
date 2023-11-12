@@ -66,8 +66,9 @@ class System:
     def remove_member(self, id: int) -> None:
         for data in self.member_list:
             if (data.id == id):
-                self.member_list.pop(data)
+                self.member_list.remove(data)
                 self.write_files()
+                return
 
 	# Since their is no unsuspend, if this was called by and they were
 	#suspended, it will unsuspend.
@@ -78,6 +79,7 @@ class System:
                     data.suspended = False
                 else:
                     data.suspended = True
+                return
 					
 
 				
@@ -98,7 +100,8 @@ class System:
     def remove_provider(self, id: int) -> None:
         for data in self.provider_list:
             if (data.id == id):
-                self.member_list.pop(data)
+                self.provider_list.remove(data)
+            return
         self.write_files()
 
     def lookup_provider(self, id: int) -> user.Provider:
@@ -118,6 +121,14 @@ class System:
             if (data.code == code):
                 return service.Service(data.name, data.code, data.fee)
         raise Exception("Service Not Found")
+
+    def record_service(self, record: service.Record) -> None:
+        service_data: service.Service = service.Service(record.service.name, record.service.code, record.service.fee)
+        member_data: user.Member = user.Member(record.member.name, record.member.id, record.member.address, record.member.city, record.member.state, record.member.zip_code, record.member.suspended)
+        provider_data: user.Provider = user.Provider(record.provider.name, record.provider.id, record.provider.address, record.provider.city, record.provider.state, record.provider.zip_code)   
+        
+        self.record_list += [ service.Record(record.service_date_time, provider_data, member_data, service_data, record.comments)]
+        self.write_files()
 
     def issue_member_report(self, member: user.Member) -> None:
         pass
