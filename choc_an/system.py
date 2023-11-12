@@ -5,7 +5,8 @@ import os
 import glob
 import json
 import array
-
+from datetime import datetime
+#Date time needed for 251
 
 
 class System:
@@ -29,7 +30,7 @@ class System:
     
     def load_files(self) -> None:
         self.load_members()
-        self.load_provider()
+        self.load_providers()
         self.load_managers()
         self.load_services()
         self.load_records()
@@ -56,7 +57,7 @@ class System:
 		
 
     def add_member(self, new_member: user.Member) -> None:
-        new_member_json = user.member(new_member.name, new_member.id, new_member.address, new_member.city, new_member.state, new_member.zip_code, new_member.suspended)
+        new_member_json = user.Member(new_member.name, new_member.id, new_member.address, new_member.city, new_member.state, new_member.zip_code, new_member.suspended)
         self.member_list += [new_member_json]
         self.write_files()
     
@@ -65,13 +66,13 @@ class System:
         for data in self.member_list:
             if (data.id == id):
                 self.member_list.pop(data)
-        self.write_files()
+                self.write_files()
 
 	# Since their is no unsuspend, if this was called by and they were
 	#suspended, it will unsuspend.
     def suspend_member(self, id: int) -> None:
         for data in self.member_list:
-            if (data['id'] == id):
+            if (data.id == id):
                 if (data.suspended == True):
                     data.suspended = False
                 else:
@@ -83,7 +84,7 @@ class System:
     def lookup_member(self, id: int) -> user.Member:
         for member in self.member_list:
             if (member.id == id):
-                return user.member(member.name, member.id, member.address, member.city, member.state, member.zip_code, member.suspended)
+                return user.Member(member.name, member.id, member.address, member.city, member.state, member.zip_code, member.suspended)
         raise Exception("Member not Found")
 
     def add_provider(self, new_provider: user.Provider) -> None:
@@ -102,19 +103,19 @@ class System:
     def lookup_provider(self, id: int) -> user.Provider:
         for data in self.provider_list:
             if (data.id == id):
-                return user.Provider(data['name'], data['id'], data['address'], data['city'], data['state'], data['zip_code'])
+                return user.Provider(data.name, data.id, data.address, data.city, data.state, data.zip_code)
         raise Exception("Provider Not Found")
 
     def lookup_manager(self, name: str) -> user.Manager:
         for data in self.manager_list:
             if (data.name == name):
-                return user.Manager(data['name'])
+                return user.Manager(data.name)
         raise Exception("Manger Not Found")
 
     def lookup_service(self, code: int) -> service.Service:
         for data in self.service_list:
             if (data.code == code):
-                return service.Service(data['name'], data['code'], data['fee'])
+                return service.Service(data.name, data.code, data.fee)
         raise Exception("Service Not Found")
 
     def issue_member_report(self, member: user.Member) -> None:
@@ -135,15 +136,17 @@ class System:
     def weekly_actions(self) -> None:
         pass
 
-    def members_to_json(self, convert: user.Member) -> dict:
-        json_data = []
+
+
+    def members_to_json(self, convert: list[user.Member]) -> list[dict]:
+        json_data: [list[dict]] = []
         for data in convert:
             json_data += [self.member_to_json(data)]
         return json_data
     
     def member_to_json(self, convert: user.Member) -> dict:
-        json_data = '{ "name":null, "id":null, "address":null, "city":null, "state":null, "zip_code":null, "suspended":null}'
-        json_data = json.loads(json_data)
+        json_datas = '{ "name":null, "id":null, "address":null, "city":null, "state":null, "zip_code":null, "suspended":null}'
+        json_data: [dict[str, int]] = json.loads(json_datas)
         json_data["name"] = convert.name
         json_data["id"] = convert.id
         json_data["address"] = convert.address
@@ -155,7 +158,7 @@ class System:
         return json_data
     
     def json_to_members(self, convert: list[dict]) -> list[user.Member]:
-        hold_list = []
+        hold_list: [list[user.Member]] = []
         for data in convert:
             hold_list += [self.json_to_member(data)]
         return hold_list
@@ -163,15 +166,15 @@ class System:
     def json_to_member(self, convert: dict) -> user.Member:
         return user.Member(convert["name"], convert["id"], convert["address"], convert["city"], convert["state"], convert["zip_code"], convert["suspended"])
 
-    def providers_to_json(self, convert: list[user.Provider]) -> dict:
-        json_data = []
+    def providers_to_json(self, convert: list[user.Provider]) -> list[dict]:
+        json_data: [list[dict]] = []
         for data in convert:
-            json_data += [self.provider_to_json(convert)]
+            json_data += [self.provider_to_json(data)]
         return json_data
 
     def provider_to_json(self, convert: user.Provider) -> dict:
-        json_data = '{ "name":null, "id":null, "address":null, "city":null, "state":null, "zip_code":null}'
-        json_data = json.loads(json_data)
+        json_datas = '{ "name":null, "id":null, "address":null, "city":null, "state":null, "zip_code":null}'
+        json_data: [dict[str, int]] = json.loads(json_datas)
         json_data["name"] = convert.name
         json_data["id"] = convert.id
         json_data["address"] = convert.address
@@ -182,7 +185,7 @@ class System:
         return json_data
     
     def json_to_providers(self, convert: list[dict]) -> list[user.Provider]:
-        hold_list = []
+        hold_list: [list[user.Provider]] = []
         for data in convert:
             hold_list += [self.json_to_provider(data)]
         return hold_list
@@ -190,23 +193,23 @@ class System:
     def json_to_provider(self, convert: dict) -> user.Provider:
         return user.Provider(convert["name"], convert["id"], convert["address"], convert["city"], convert["state"], convert["zip_code"])
 
-    def managers_to_json(self, convert: list[user.Manager]) -> dict:
-        json_hold = []
+    def managers_to_json(self, convert: list[user.Manager]) -> list[dict]:
+        json_hold: [list[dict]] = []
         for data in convert:
             json_hold += [self.manager_to_json(data)]
         return json_hold
     
     def manager_to_json(self, convert: user.Manager) -> dict:
-        json_data = '{ "name":null}'
-        json_data = json.loads(json_data)
+        json_datas = '{ "name":null}'
+        json_data: [dict[str]] = json.loads(json_datas)
         json_data["name"] = convert.name
         
         return json_data
     
     def json_to_managers(self, convert: list[dict]) -> list[user.Manager]:
-        hold_list = []
+        hold_list: [list[user.Manager]] = []
         for data in convert:
-            hold_list += [json_to_manager(data)]
+            hold_list += [self.json_to_manager(data)]
         
         return hold_list
     
@@ -214,15 +217,15 @@ class System:
         return user.Manager(convert["name"])
     
     def services_to_json(self, convert: list[service.Service]) -> list[dict]:
-        json_list = []
+        json_list: [list[dict]] = []
         for data in convert:
             json_list += [self.service_to_json(data)]
         
         return json_list
     
     def service_to_json(self, convert: service.Service) -> dict:
-        json_data = '{"name":null, "code":null, "fee":null}'
-        json_data = json.loads(json_data)
+        json_datas = '{"name":null, "code":null, "fee":null}'
+        json_data:[str, int, float] = json.loads(json_datas)
         json_data["name"] = convert.name
         json_data["code"] = convert.code
         json_data["fee"] = convert.fee
@@ -230,7 +233,7 @@ class System:
         return json_data
     
     def json_to_services(self, convert: list[dict]) -> list[service.Service]:
-        hold_list = []
+        hold_list: [list[service.Service]] = []
         for data in convert:
             hold_list += [self.json_to_service(data)]
         return hold_list
@@ -239,15 +242,15 @@ class System:
         return service.Service(convert["name"], convert["code"], convert["fee"])
     
     def records_to_json(self, convert: list[service.Record]) -> list[dict]:
-        json_hold = []
+        json_hold: [list[dict]] = []
         for data in convert:
             json_hold += [self.record_to_json(data)]
         
         return json_hold
     
     def record_to_json(self, convert: service.Record) -> dict:
-        json_data = '{ "current_date_time":null, "service_date_time":null, "provider":null, "member":null, "service":null, "comments":null }'
-        json_data = json.loads(json_data)
+        json_datas = '{ "current_date_time":null, "service_date_time":null, "provider":null, "member":null, "service":null, "comments":null }'
+        json_data: dict[str, datetime, dict] = json.loads(json_datas)
         json_data["current_data_time"] = convert.current_date_time
         json_data["service_data_time"] = convert.service_date_time
         json_data["provider"] = self.provider_to_json(convert.provider)
@@ -258,7 +261,7 @@ class System:
         return json_data
     
     def json_to_records(self, convert: list[dict]) -> list[service.Record]:
-        hold_list = []
+        hold_list: [list[service.Record]] = []
         for data in convert:
             hold_list += [self.json_to_record(data)]
         
@@ -278,36 +281,36 @@ class System:
     def load_members(self) -> None:
         if (os.path.exists(self.path + '/member/members.json')):
             with open(self.path + '/member/members.json', 'r') as data:
-                data = json.loads(data)
-                self.member_list = self.json_to_members(data)
+                hold_data: [list[dict]] = json.load(data)
+                self.member_list = self.json_to_members(hold_data)
 
     def load_providers(self) -> None:
         if (os.path.exists(self.path + '/provider/providers.json')):
             with open(self.path + '/provider/providers.json', 'r') as data:
-                data = json.loads(data)
-                self.provider_list = self.json_to_providers(data)
+                info: [list[dict]] = json.load(data)
+                self.provider_list = self.json_to_providers(info)
 
-    def load_mangers(self) -> None:
+    def load_managers(self) -> None:
         if (os.path.exists(self.path + '/manger/mangers.json')):
             with open(self.path + '/manger/mangers.json', 'r') as data:
-                data = json.loads(data)
-                self.manger_list = self.json_to_mangers(data)
+                info: [list[dict]] = json.load(data)
+                self.manger_list = self.json_to_managers(info)
 
     def load_services(self) -> None:
         if (os.path.exists(self.path + '/service/services.json')):
             with open(self.path + '/service/services.json', 'r') as data:
-                data = json.loads(data)
-                self.service_list = self.json_to_services(data)
+                info: [list[dict]] = json.load(data)
+                self.service_list = self.json_to_services(info)
 
     def load_records(self) -> None:
         if (os.path.exists(self.path + '/record/records.json')):
             with open(self.path + '/record/records.json', 'r') as data:
-                data = json.loads(data)
-                self.record_list = self.json_to_records(data)
+                info: [list[dict]] = json.load(data)
+                self.record_list = self.json_to_records(info)
 
 
     def write_data(self, save_data: list[dict], path: str):
-        type_write = 'w'
+        type_write: [str] = 'w'
         if (os.path.exists(path)):
             type_write = 'x'
         with open(path, type_write, encodeing='utf-8') as data_location:
