@@ -13,10 +13,12 @@ class MemberReport(report.Report):
         self.record_list = record_list
 
     def output(self) -> str:
-        print("Member Report:")
-        print("\tMember: " + self.member.name)
+        returnString = "Member Report:\n"
+        returnString += ("\tMember: " + str(self.member.name) + "\n")
         for x in range(len(self.record_list)):
-            print("\t\t" + self.record_list[x].service.name)
+            returnString += ("\t\t" + str(self.record_list[x].service.name))
+
+        return returnString
         
 
 
@@ -44,12 +46,14 @@ class ProviderReport(report.Report):
         self.total_fee = total_fee
 
     def output(self) -> str:
-        print("Provider Report:")
-        print("\tProvider: " + self.provider.name)
-        print("\tTotal consultations: " + self.total_consultations)
-        print("\tTotal charges: " + self.total_fee)
+
+        returnString = ("Provider Report:\n")
+        returnString += ("\tProvider: " + str(self.provider.name) + "\n")
+        returnString += ("\tTotal consultations: " + str(self.total_consultations) + "\n")
+        returnString += ("\tTotal charges: " + str(self.total_fee) + "\n")
         for x in range(len(self.record_list)):
-            print("\t\tRecord: " + self.record_list[x].service.name)
+            returnString += ("\t\tRecord: " + str(self.record_list[x].service.name) + "\n")
+        return returnString
         
 
 
@@ -60,10 +64,10 @@ class ProviderDirectory(report.Report):
         self.service_list = service_list
 
     def output(self) -> str:
-        print("Provider Directory:")
+        returnString = ("Provider Directory:\n")
         for x in range(len(self.service_list)):
-            print("\tService: " + self.service_list[x].name + "Service code: "+ self.service_list[x].code)
-
+            returnString += ("\tService: " + str(self.service_list[x].name) + "Service code: "+ str(self.service_list[x].code) + "\n")
+        return returnString
 
 class SummaryReportEntry:
     provider: user.Provider
@@ -105,11 +109,12 @@ class SummaryReport(report.Report):
         self.total_fee = total_fee
 
     def output(self) -> str:
-        print("Summar Report:")
-        print("\tTotal providers: " + self.total_providers)
-        print("\tTotal consultations: " + self.total_consultations)
-        print("\tTotal fees: " + self.total_fee)
+        returnString = ("Summar Report:\n")
+        returnString += ("\tTotal providers: " + str(self.total_providers) + "\n")
+        returnString += ("\tTotal consultations: " + str(self.total_consultations) + "\n")
+        returnString += ("\tTotal fees: " + str(self.total_fee) + "\n")
         for x in range(len(self.entries)):
-            print("\t\tProvider" + self.entries[x].provider)
-            print("\t\tNumber of consultations " + self.entries[x].number_of_consultations)
-            print("\t\tTotal fee" + self.entries[x].total_fee)
+            returnString += ("\t\tProvider" + str(self.entries[x].provider) + "\n")
+            returnString += ("\t\tNumber of consultations " + str(self.entries[x].number_of_consultations) + "\n")
+            returnString += ("\t\tTotal fee" + str(self.entries[x].total_fee) + "\n")
+        return returnString
