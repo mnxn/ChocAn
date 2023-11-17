@@ -13,7 +13,11 @@ class MemberReport(report.Report):
         self.record_list = record_list
 
     def output(self) -> str:
-        pass
+        print("Member Report:")
+        print("\tMember: " + self.member.name)
+        for x in range(len(self.record_list)):
+            print("\t\t" + self.record_list[x].service.name)
+        
 
 
 class ProviderReport(report.Report):
@@ -40,7 +44,13 @@ class ProviderReport(report.Report):
         self.total_fee = total_fee
 
     def output(self) -> str:
-        pass
+        print("Provider Report:")
+        print("\tProvider: " + self.provider.name)
+        print("\tTotal consultations: " + self.total_consultations)
+        print("\tTotal charges: " + self.total_fee)
+        for x in range(len(self.record_list)):
+            print("\t\tRecord: " + self.record_list[x].service.name)
+        
 
 
 class ProviderDirectory(report.Report):
@@ -50,7 +60,9 @@ class ProviderDirectory(report.Report):
         self.service_list = service_list
 
     def output(self) -> str:
-        pass
+        print("Provider Directory:")
+        for x in range(len(self.service_list)):
+            print("\tService: " + self.service_list[x].name + "Service code: "+ self.service_list[x].code)
 
 
 class SummaryReportEntry:
@@ -93,4 +105,11 @@ class SummaryReport(report.Report):
         self.total_fee = total_fee
 
     def output(self) -> str:
-        pass
+        print("Summar Report:")
+        print("\tTotal providers: " + self.total_providers)
+        print("\tTotal consultations: " + self.total_consultations)
+        print("\tTotal fees: " + self.total_fee)
+        for x in range(len(self.entries)):
+            print("\t\tProvider" + self.entries[x].provider)
+            print("\t\tNumber of consultations " + self.entries[x].number_of_consultations)
+            print("\t\tTotal fee" + self.entries[x].total_fee)
