@@ -87,7 +87,7 @@ class System:
     def lookup_member(self, id: int) -> user.Member:
         for member in self.member_list:
             if (member.id == id):
-                return user.Member(member.name, member.id, member.address, member.city, member.state, member.zip_code, member.suspended)
+                return member
         raise Exception("Member not Found")
 
     def add_provider(self, new_provider: user.Provider) -> None:
@@ -105,19 +105,19 @@ class System:
     def lookup_provider(self, id: int) -> user.Provider:
         for data in self.provider_list:
             if (data.id == id):
-                return user.Provider(data.name, data.id, data.address, data.city, data.state, data.zip_code)
+                return data
         raise Exception("Provider Not Found")
 
     def lookup_manager(self, name: str) -> user.Manager:
         for data in self.manager_list:
             if (data.name == name):
-                return user.Manager(data.name)
+                return data
         raise Exception("Manger Not Found")
 
     def lookup_service(self, code: int) -> service.Service:
         for data in self.service_list:
             if (data.code == code):
-                return service.Service(data.name, data.code, data.fee)
+                return data
         raise Exception("Service Not Found")
 
     def record_service(self, record: service.Record) -> None:
@@ -131,7 +131,7 @@ class System:
             if (record.member.id == member.id):
                 records.append(record)
         report = reports.MemberReport(member, records)
-        report.output()
+        member.receive_report(report)
 
         
 
@@ -147,7 +147,7 @@ class System:
                 total_consultations += 1
                 total_fee += record.service.fee
         report = reports.ProviderReport(provider, records, total_consultations, total_fee)
-        report.output()
+        provider.receive_report(report)
 
     def issue_provider_directory(self, provider: user.Provider) -> None:
         report: reports.ProviderDirectory = reports.ProviderDirectory(self.service_list)
@@ -174,7 +174,7 @@ class System:
             total_consultations += consultations
         
         report = reports.SummaryReport(entries, total_providers, total_consultations, (total_fee))
-        report.output()
+        manager.receive_report(report)
         
 
     def write_eft_data(self, record: service.Record) -> None:
