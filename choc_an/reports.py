@@ -14,9 +14,16 @@ class MemberReport(report.Report):
 
     def output(self) -> str:
         returnString = "Member Report:\n"
-        returnString += ("\tMember: " + str(self.member.name) + "\n")
-        for x in range(len(self.record_list)):
-            returnString += ("\t\t" + str(self.record_list[x].service.name))
+        returnString += "\tMember name: " + self.member.name + "\n"
+        returnString += "\tMember number: " + str(self.member.id) + "\n"
+        returnString += "\tMember address: " + self.member.address + "\n"
+        returnString += "\tMember city: " + self.member.city + "\n"
+        returnString += "\tMember state: " + self.member.state + "\n"
+        returnString += "\tMember zipcode: " + str(self.member.zip_code) + "\n"
+        for record in self.record_list:
+            returnString += "\t\tDate of service: " + str(record.service_date_time)
+            returnString += "\t\tProvider name: " + str(record.provider.name)
+            returnString += "\t\tService name: " + record.service.name
 
         return returnString
         
@@ -47,12 +54,22 @@ class ProviderReport(report.Report):
 
     def output(self) -> str:
 
-        returnString = ("Provider Report:\n")
-        returnString += ("\tProvider: " + str(self.provider.name) + "\n")
-        returnString += ("\tTotal consultations: " + str(self.total_consultations) + "\n")
-        returnString += ("\tTotal charges: " + str(self.total_fee) + "\n")
-        for x in range(len(self.record_list)):
-            returnString += ("\t\tRecord: " + str(self.record_list[x].service.name) + "\n")
+        returnString = "Provider Report:\n"
+        returnString += "\tProvider name: " + self.provider.name + "\n"
+        returnString += "\tProvider ID number: " + str(self.provider.id) + "\n"
+        returnString += "\Provider address: " + self.provider.address + "\n"
+        returnString += "\tProvider city: " + self.provider.city + "\n"
+        returnString += "\tProvider state: " + self.provider.state + "\n"
+        returnString += "\tProvider zip code: " + str(self.provider.zip_code) + "\n"
+        for record in self.record_list:
+            returnString += "\t\tService date: " + str(record.service_date_time) + "\n"
+            returnString += "\t\tCurrent date: " + str(record.current_date_time) + "\n" 
+            returnString += "\t\tMember name: " + record.member.name + "\n" 
+            returnString += "\t\tMember number: " + str(record.member.id) + "\n" 
+            returnString += "\t\tService code: " + str(record.service.code) + "\n" 
+            returnString += "\t\tFee to be paid: " + str(record.service.fee) + "\n\n" 
+        returnString += "\tTotal number of consultations: " + str(self.total_consultations) + "\n"
+        returnString += "\tTotal fee for the week: " + str(self.total_fee) + "\n"
         return returnString
         
 
@@ -109,12 +126,15 @@ class SummaryReport(report.Report):
         self.total_fee = total_fee
 
     def output(self) -> str:
-        returnString = ("Summar Report:\n")
-        returnString += ("\tTotal providers: " + str(self.total_providers) + "\n")
-        returnString += ("\tTotal consultations: " + str(self.total_consultations) + "\n")
-        returnString += ("\tTotal fees: " + str(self.total_fee) + "\n")
-        for x in range(len(self.entries)):
-            returnString += ("\t\tProvider" + str(self.entries[x].provider) + "\n")
-            returnString += ("\t\tNumber of consultations " + str(self.entries[x].number_of_consultations) + "\n")
-            returnString += ("\t\tTotal fee" + str(self.entries[x].total_fee) + "\n")
+        returnString = "Summary Report:\n"
+
+        for record in self.entries:
+            returnString += "\tProvider" + str(record.provider) + "\n"
+            returnString += "\tNumber of consultations " + str(record.number_of_consultations) + "\n"
+            returnString += "\tTotal fee" + str(record.total_fee) + "\n\n"
+        
+        returnString += "\tTotal providers: " + str(self.total_providers) + "\n"
+        returnString += "\tTotal consultations: " + str(self.total_consultations) + "\n"
+        returnString += "\tTotal fees: " + str(self.total_fee) + "\n"
+
         return returnString
