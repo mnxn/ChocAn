@@ -13,7 +13,20 @@ class MemberReport(report.Report):
         self.record_list = record_list
 
     def output(self) -> str:
-        pass
+        returnString = "Member Report:\n"
+        returnString += "\tMember name: " + self.member.name + "\n"
+        returnString += "\tMember number: " + str(self.member.id) + "\n"
+        returnString += "\tMember address: " + self.member.address + "\n"
+        returnString += "\tMember city: " + self.member.city + "\n"
+        returnString += "\tMember state: " + self.member.state + "\n"
+        returnString += "\tMember zipcode: " + str(self.member.zip_code) + "\n"
+        for record in self.record_list:
+            returnString += "\t\tDate of service: " + str(record.service_date_time) + "\n"
+            returnString += "\t\tProvider name: " + str(record.provider.name) + "\n"
+            returnString += "\t\tService name: " + record.service.name + "\n"
+
+        return returnString
+        
 
 
 class ProviderReport(report.Report):
@@ -40,7 +53,25 @@ class ProviderReport(report.Report):
         self.total_fee = total_fee
 
     def output(self) -> str:
-        pass
+
+        returnString = "Provider Report:\n"
+        returnString += "\tProvider name: " + self.provider.name + "\n"
+        returnString += "\tProvider ID number: " + str(self.provider.id) + "\n"
+        returnString += "\Provider address: " + self.provider.address + "\n"
+        returnString += "\tProvider city: " + self.provider.city + "\n"
+        returnString += "\tProvider state: " + self.provider.state + "\n"
+        returnString += "\tProvider zip code: " + str(self.provider.zip_code) + "\n"
+        for record in self.record_list:
+            returnString += "\t\tService date: " + str(record.service_date_time) + "\n"
+            returnString += "\t\tCurrent date: " + str(record.current_date_time) + "\n" 
+            returnString += "\t\tMember name: " + record.member.name + "\n" 
+            returnString += "\t\tMember number: " + str(record.member.id) + "\n" 
+            returnString += "\t\tService code: " + str(record.service.code) + "\n" 
+            returnString += "\t\tFee to be paid: " + str(record.service.fee) + "\n\n" 
+        returnString += "\tTotal number of consultations: " + str(self.total_consultations) + "\n"
+        returnString += "\tTotal fee for the week: " + str(self.total_fee) + "\n"
+        return returnString
+        
 
 
 class ProviderDirectory(report.Report):
@@ -50,8 +81,10 @@ class ProviderDirectory(report.Report):
         self.service_list = service_list
 
     def output(self) -> str:
-        pass
-
+        returnString = "Provider Directory:\n"
+        for service in self.service_list:
+            returnString += "\tService: " + str(service.name) + " Service code: "+ str(service.code) + "\n"
+        return returnString
 
 class SummaryReportEntry:
     provider: user.Provider
@@ -93,4 +126,15 @@ class SummaryReport(report.Report):
         self.total_fee = total_fee
 
     def output(self) -> str:
-        pass
+        returnString = "Summary Report:\n"
+
+        for entry in self.entries:
+            returnString += "\tProvider" + str(entry.provider) + "\n"
+            returnString += "\tNumber of consultations " + str(entry.number_of_consultations) + "\n"
+            returnString += "\tTotal fee" + str(entry.total_fee) + "\n\n"
+        
+        returnString += "\tTotal providers: " + str(self.total_providers) + "\n"
+        returnString += "\tTotal consultations: " + str(self.total_consultations) + "\n"
+        returnString += "\tTotal fees: " + str(self.total_fee) + "\n"
+
+        return returnString
