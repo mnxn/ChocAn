@@ -21,9 +21,9 @@ class MemberReport(report.Report):
         returnString += "\tMember state: " + self.member.state + "\n"
         returnString += "\tMember zipcode: " + str(self.member.zip_code) + "\n"
         for record in self.record_list:
-            returnString += "\t\tDate of service: " + str(record.service_date_time)
-            returnString += "\t\tProvider name: " + str(record.provider.name)
-            returnString += "\t\tService name: " + record.service.name
+            returnString += "\t\tDate of service: " + str(record.service_date_time) + "\n"
+            returnString += "\t\tProvider name: " + str(record.provider.name) + "\n"
+            returnString += "\t\tService name: " + record.service.name + "\n"
 
         return returnString
         
@@ -81,9 +81,9 @@ class ProviderDirectory(report.Report):
         self.service_list = service_list
 
     def output(self) -> str:
-        returnString = ("Provider Directory:\n")
-        for x in range(len(self.service_list)):
-            returnString += ("\tService: " + str(self.service_list[x].name) + "Service code: "+ str(self.service_list[x].code) + "\n")
+        returnString = "Provider Directory:\n"
+        for service in self.service_list:
+            returnString += "\tService: " + str(service.name) + " Service code: "+ str(service.code) + "\n"
         return returnString
 
 class SummaryReportEntry:
@@ -128,10 +128,10 @@ class SummaryReport(report.Report):
     def output(self) -> str:
         returnString = "Summary Report:\n"
 
-        for record in self.entries:
-            returnString += "\tProvider" + str(record.provider) + "\n"
-            returnString += "\tNumber of consultations " + str(record.number_of_consultations) + "\n"
-            returnString += "\tTotal fee" + str(record.total_fee) + "\n\n"
+        for entry in self.entries:
+            returnString += "\tProvider" + str(entry.provider) + "\n"
+            returnString += "\tNumber of consultations " + str(entry.number_of_consultations) + "\n"
+            returnString += "\tTotal fee" + str(entry.total_fee) + "\n\n"
         
         returnString += "\tTotal providers: " + str(self.total_providers) + "\n"
         returnString += "\tTotal consultations: " + str(self.total_consultations) + "\n"
