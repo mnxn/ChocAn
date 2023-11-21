@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
+from datetime import datetime
 from . import report
-
+import os
 
 class User(ABC):
     name: str
@@ -11,7 +12,6 @@ class User(ABC):
     @abstractmethod
     def receive_report(self, report: report.Report) -> None:
         pass
-
 
 class UserAccount(User):
     id: int
@@ -48,8 +48,15 @@ class Manager(User):
         super().__init__(name)
 
     def receive_report(self, report: report.Report) -> None:
-        pass
-
+        try:
+            filename = f"manager_{self.name}_{datetime.now().strftime('%Y-%m-%d')}.txt"
+            os.makedirs('reports', exist_ok=True)
+            with open(os.path.join('reports', filename), 'w') as file:
+                file.write(report.output())
+            print(f"Report saved to {os.path.join('reports', filename)}")
+        except Exception as error:
+            print("fail to write report")
+            raise
 
 class Member(UserAccount):
     suspended: bool
@@ -68,7 +75,16 @@ class Member(UserAccount):
         self.suspended = suspended
 
     def receive_report(self, report: report.Report) -> None:
-        pass
+        try:
+            filename = f"member_{self.name}_{datetime.now().strftime('%Y-%m-%d')}.txt"
+            os.makedirs('reports', exist_ok=True)
+            with open(os.path.join('reports', filename), 'w') as file:
+                file.write(report.output())
+            print(f"Report saved to {os.path.join('reports', filename)}")
+        except Exception as error:
+            print("fail to write report")
+            raise
+
 
 
 class Provider(UserAccount):
@@ -78,4 +94,13 @@ class Provider(UserAccount):
         super().__init__(name, id, address, city, state, zip_code)
 
     def receive_report(self, report: report.Report) -> None:
-        pass
+        try:
+            filename = f"provider_{self.name}_{datetime.now().strftime('%Y-%m-%d')}.txt"
+            os.makedirs('reports', exist_ok=True)
+            with open(os.path.join('reports', filename), 'w') as file:
+                file.write(report.output())
+            print(f"Report saved to {os.path.join('reports', filename)}")
+        except Exception as error:
+            print("fail to write report")
+            raise
+
