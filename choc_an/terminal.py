@@ -1,6 +1,6 @@
 from . import user
 from . import system
-from service import Record
+from . service import Record
 
 class ProviderTerminal:
     current_system: system.System
