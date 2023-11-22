@@ -24,13 +24,13 @@ class ProviderTerminal:
             print(e)
 
     def logout_provider(self) -> None:
-        if (self.current_provider == None):
+        if (self.current_provider is None):
             raise Exception("Error. No provider is logged in.")
         self.current_provider = None
         self.current_member = None
 
     def login_member(self) -> None:
-        if (self.current_member != None):
+        if (self.current_member is not None):
             raise Exception("Error. A member is already logged in.")
         id = int(input("Enter Member ID: "))
 
@@ -42,7 +42,7 @@ class ProviderTerminal:
             print("Validated.")
 
     def logout_member(self) -> None:
-        if (self.current_member == None):
+        if (self.current_member is None):
             raise Exception("Error. No member is logged in.")
         self.current_member = None
 
@@ -103,7 +103,7 @@ class ManagerTerminal(ProviderTerminal):
         self.current_manager = None
 
     def login_manager(self) -> None:
-        if (self.current_manager != None):
+        if (self.current_manager is not None):
             raise Exception("Error. Must logout to login.")
         name = str(input("Enter Your Name: "))
 
@@ -113,12 +113,12 @@ class ManagerTerminal(ProviderTerminal):
             print(e)
 
     def logout_manager(self) -> None:
-        if (self.current_manager == None):
+        if (self.current_manager is None):
             raise Exception("Error. No manager is logged in.")
         self.current_manager == None
 
     def request_member_report(self) -> None:
-        if (self.current_manager == None):
+        if (self.current_manager is None):
             raise Exception("Error. No manager is logged in.")
         id = int(input("Enter member ID: "))
 
@@ -130,7 +130,7 @@ class ManagerTerminal(ProviderTerminal):
             self.current_system.issue_member_report(member)
 
     def request_provider_report(self) -> None:
-        if (self.current_manager == None):
+        if (self.current_manager is None):
             raise Exception("Error. No manager is logged in.")
         id = int(input("Enter provider ID: "))
 
