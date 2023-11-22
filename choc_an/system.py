@@ -177,11 +177,19 @@ class System:
         manager.receive_report(report)
         
 
-    def write_eft_data(self, record: service.Record) -> None:
-        data: str = (record.provider.name) + ", "
-        data += str(record.provider.id) + ", "
-        data += str(record.service.fee) + ", "
-        #Fix/not finished.
+    def write_eft_data(self, record: service.Record, path: str) -> None:
+
+        data = f"{record.provider.name}, {record.provider.id}, {record.service.fee}"
+
+        # Create the directory if it doesn't exist
+        os.makedirs(path, exist_ok=True)
+
+        # Write data to path
+        with open(path, 'a') as eft_file:
+            json.dump(data, eft_file, ensure_ascii=False, indent=2)
+            eft_file.write('\n')
+
+        
 
     def weekly_actions(self) -> None:
         for member in self.member_list:
@@ -194,7 +202,7 @@ class System:
             self.issue_summary_report(manager)
 
         for record in self.record_list:
-            self.write_eft_data(record)
+            self.write_eft_data(record, self.path+'/record/eft')
 
 
 
