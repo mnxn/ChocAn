@@ -86,6 +86,7 @@ class ProviderTerminal:
 
         service_date = datetime(year, month, day)
         code = int(input("Enter the service code"))
+        user = 'n'
         while (user == 'N' or user == 'n'):
             service = self.current_system.lookup_service(code)
             print(service.name)
