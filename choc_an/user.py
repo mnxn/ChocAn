@@ -55,8 +55,6 @@ class Manager(User):
     def __init__(self, name: str) -> None:
         super().__init__(name)
 
-    def receive_report(self, report: report.Report) -> None:
-        pass
 
 class Member(UserAccount):
     suspended: bool
@@ -74,8 +72,6 @@ class Member(UserAccount):
         super().__init__(name, id, address, city, state, zip_code)
         self.suspended = suspended
 
-    def receive_report(self, report: report.Report) -> None:
-        pass
 
 
 class Provider(UserAccount):
@@ -83,6 +79,3 @@ class Provider(UserAccount):
         self, name: str, id: int, address: str, city: str, state: str, zip_code: int
     ) -> None:
         super().__init__(name, id, address, city, state, zip_code)
-
-    def receive_report(self, report: report.Report) -> None:
-        pass
