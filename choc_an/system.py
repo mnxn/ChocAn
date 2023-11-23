@@ -177,9 +177,9 @@ class System:
         manager.receive_report(report)
         
 
-    def write_eft_data(self, record: service.Record, path: str) -> None:
+    def write_eft_data(self, provider, provider_fee, path: str) -> None:
 
-        data = f"{record.provider.name}, {record.provider.id}, {record.service.fee}"
+        data = f"{provider.name}, {provider.id}, {provider_fee}"
 
         # Create the directory if it doesn't exist
         os.makedirs(path, exist_ok=True)
@@ -201,8 +201,13 @@ class System:
         for manager in self.manager_list:
             self.issue_summary_report(manager)
 
-        for record in self.record_list:
-            self.write_eft_data(record, self.path+'/record/eft')
+        for provider in self.provider_list:
+            provider_fee: Decimal = Decimal(0)
+            for record in self.record_list:
+                if(record.provider.id == provider.id):
+                    provider_fee += record.service.fee
+            if(provider_fee != 0):
+                self.write_eft_data(provider, provider_fee, self.path+'/record/eft')
 
 
 
