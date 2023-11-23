@@ -177,7 +177,7 @@ class System:
         manager.receive_report(report)
         
 
-    def write_eft_data(self, provider, provider_fee, path: str) -> None:
+    def write_eft_data(self, provider: user.Provider, provider_fee:Decimal, path: str) -> None:
 
         data = f"{provider.name}, {provider.id}, {provider_fee}"
 
