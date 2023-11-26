@@ -70,12 +70,8 @@ class ProviderTerminal:
             raise Exception("Error. A member is already logged in.")
         id = int(input("Enter Member ID: "))
 
-        try:
-            self.current_member = self.current_system.lookup_member(id)
-        except Exception as e:
-            print(e)
-        else:
-            print("Validated.")
+        self.current_member = self.current_system.lookup_member(id)
+        print("Validated.")
 
     def logout_member(self) -> None:
         if self.current_member is None:
@@ -91,12 +87,8 @@ class ProviderTerminal:
     def validate_service_code(self) -> None:
         service_code = int(input("Enter Service Code: "))
 
-        try:
-            service = self.current_system.lookup_service(service_code)
-        except Exception as e:
-            print(e)
-        else:
-            print(service.name)
+        service = self.current_system.lookup_service(service_code)
+        print(service.name)
 
     def bill(self) -> None:
         if self.current_member is None:
@@ -108,13 +100,8 @@ class ProviderTerminal:
         if id != self.current_member.id:
             raise Exception("Error. Incorrect member ID.")
 
-        try:
-            self.current_system.lookup_member(id)
-        except Exception as e:
-            print(e)
-            return
-        else:
-            print("Validated.")
+        self.current_system.lookup_member(id)
+        print("Validated.")
 
         date = input("Enter the service date (MM-DD-YYYY): ")
         month, day, year = map(int, date.split("-"))
@@ -200,10 +187,7 @@ class ManagerTerminal(ProviderTerminal):
             raise Exception("Error. Must logout to login.")
         name = str(input("Enter Your Name: "))
 
-        try:
-            self.current_manager = self.current_system.lookup_manager(name)
-        except Exception as e:
-            print(e)
+        self.current_manager = self.current_system.lookup_manager(name)
 
     def logout_manager(self) -> None:
         if self.current_manager is None:
@@ -215,24 +199,16 @@ class ManagerTerminal(ProviderTerminal):
             raise Exception("Error. No manager is logged in.")
         id = int(input("Enter member ID: "))
 
-        try:
-            member = self.current_system.lookup_member(id)
-        except Exception as e:
-            print(e)
-        else:
-            self.current_system.issue_member_report(member)
+        member = self.current_system.lookup_member(id)
+        self.current_system.issue_member_report(member)
 
     def request_provider_report(self) -> None:
         if self.current_manager is None:
             raise Exception("Error. No manager is logged in.")
         id = int(input("Enter provider ID: "))
 
-        try:
-            provider = self.current_system.lookup_provider(id)
-        except Exception as e:
-            print(e)
-        else:
-            self.current_system.issue_provider_report(provider)
+        provider = self.current_system.lookup_provider(id)
+        self.current_system.issue_provider_report(provider)
 
     def request_summary_report(self) -> None:
         if self.current_manager is None:
