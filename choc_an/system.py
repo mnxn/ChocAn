@@ -180,7 +180,7 @@ class System:
             total_consultations += consultations
 
         report = reports.SummaryReport(
-            entries, total_providers, total_consultations, (total_fee)
+            entries, total_providers, total_consultations, grand_total_fee
         )
         manager.receive_report(report)
 
