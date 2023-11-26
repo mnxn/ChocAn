@@ -112,7 +112,7 @@ class System:
         for data in self.manager_list:
             if data.name == name:
                 return data
-        raise Exception("Manger Not Found")
+        raise Exception("Manager Not Found")
 
     def lookup_service(self, code: int) -> service.Service:
         for data in self.service_list:
@@ -368,10 +368,10 @@ class System:
                 self.provider_list = self.json_to_providers(info)
 
     def load_managers(self) -> None:
-        if os.path.exists(self.path + "/manger/mangers.json"):
-            with open(self.path + "/manger/mangers.json", "r") as data:
+        if os.path.exists(self.path + "/manager/managers.json"):
+            with open(self.path + "/manager/managers.json", "r") as data:
                 info: list[dict] = json.load(data)
-                self.manger_list = self.json_to_managers(info)
+                self.manager_list = self.json_to_managers(info)
 
     def load_services(self) -> None:
         if os.path.exists(self.path + "/service/services.json"):
