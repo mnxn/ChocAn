@@ -87,8 +87,10 @@ class ProviderDirectory(report.Report):
             returnString += (
                 "\tService: "
                 + str(service.name)
-                + " Service code: "
+                + " Code: "
                 + str(service.code)
+                + " Fee: "
+                + str(service.fee)
                 + "\n"
             )
         return returnString
