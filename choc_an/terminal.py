@@ -86,12 +86,14 @@ class ProviderTerminal:
         service_date = datetime(month, day, year)
 
         service_date = datetime(year, month, day)
-        code = int(input("Enter the service code"))
-        user = "n"
-        while user == "N" or user == "n":
+
+        while True:
+            code = int(input("Enter the service code"))
             service = self.current_system.lookup_service(code)
             print(service.name)
             user = str(input("Is this the correct service?(y/n) "))
+            if user == "Y" or user == "y":
+                break
 
         comments = str(input("Enter Comments: "))
         record = Record(
