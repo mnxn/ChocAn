@@ -34,33 +34,34 @@ class System:
     # Another argument can be added to import certain type of files ex .tx
 
     def write_files(self) -> None:
-        if len(self.member_list):
+        if len(self.member_list) or True:
             self.write_data(
                 self.members_to_json(self.member_list),
                 self.path + "/member/members.json",
             )
 
-        if len(self.provider_list):
+        if len(self.provider_list) or True:
             self.write_data(
                 self.providers_to_json(self.provider_list),
                 self.path + "/provider/providers.json",
             )
 
-        if len(self.manager_list):
+        if len(self.manager_list) or True:
             self.write_data(
                 self.managers_to_json(self.manager_list),
                 self.path + "/manager/managers.json",
             )
 
-        if len(self.service_list):
+        if len(self.service_list) or True:
             self.write_data(
                 self.services_to_json(self.service_list),
                 self.path + "/service/services.json",
             )
 
-        if len(self.record_list):
+        if len(self.record_list) or True:
             self.write_data(
-                self.records_to_json(self.record_list), self.path + "/record/records"
+                self.records_to_json(self.record_list),
+                self.path + "/record/records.json",
             )
 
     def add_member(self, new_member: user.Member) -> None:
