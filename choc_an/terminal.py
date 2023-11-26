@@ -14,6 +14,41 @@ class ProviderTerminal:
         self.current_provider = None
         self.current_member = None
 
+    def run_command_menu(self) -> bool:
+        print("Commands:")
+        print("\t(1) Provider Login")
+        print("\t(2) Provider Logout")
+        print("\t(3) Member Login")
+        print("\t(4) Member Logout")
+        print("\t(5) Request Provider Directory")
+        print("\t(6) Validate Service Code")
+        print("\t(7) Bill")
+        print()
+        print("\t(8) Exit")
+        choice = input("Enter Command (1-8): ")
+        print()
+
+        if choice == "1":
+            self.login_provider()
+        elif choice == "2":
+            self.logout_provider()
+        elif choice == "3":
+            self.login_member()
+        elif choice == "4":
+            self.logout_member()
+        elif choice == "5":
+            self.request_provider_directory()
+        elif choice == "6":
+            self.validate_service_code()
+        elif choice == "7":
+            self.bill()
+        elif choice == "8":
+            return False
+        else:
+            raise Exception(f"Invalid command choice ({choice}).")
+
+        return True
+
     def login_provider(self) -> None:
         if self.current_provider is not None:
             raise Exception("Error. Must logout to login.")
@@ -108,6 +143,57 @@ class ManagerTerminal(ProviderTerminal):
     def __init__(self, system: system.System) -> None:
         super().__init__(system)
         self.current_manager = None
+
+    def run_command_menu(self) -> bool:
+        print("Commands:")
+        print("\t(1)  Manager Login")
+        print("\t(2)  Manager Logout")
+        print("\t(3)  Request Member Report")
+        print("\t(4)  Request Provider Report")
+        print("\t(5)  Request Summary Report")
+        print()
+        print("\t(6)  Provider Login")
+        print("\t(7)  Provider Logout")
+        print("\t(8)  Member Login")
+        print("\t(9)  Member Logout")
+        print("\t(10) Request Provider Directory")
+        print("\t(11) Validate Service Code")
+        print("\t(12) Bill")
+        print()
+        print("\t(13) Exit")
+        choice = input("Enter Command (1-13): ")
+        print()
+
+        if choice == "1":
+            self.login_manager()
+        elif choice == "2":
+            self.logout_manager()
+        elif choice == "3":
+            self.request_member_report()
+        elif choice == "4":
+            self.request_provider_report()
+        elif choice == "5":
+            self.request_summary_report()
+        elif choice == "6":
+            self.login_provider()
+        elif choice == "7":
+            self.logout_provider()
+        elif choice == "8":
+            self.login_member()
+        elif choice == "9":
+            self.logout_member()
+        elif choice == "10":
+            self.request_provider_directory()
+        elif choice == "11":
+            self.validate_service_code()
+        elif choice == "12":
+            self.bill()
+        elif choice == "13":
+            return False
+        else:
+            raise Exception(f"Invalid command choice ({choice}).")
+
+        return True
 
     def login_manager(self) -> None:
         if self.current_manager is not None:
