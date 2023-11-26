@@ -122,7 +122,7 @@ class ManagerTerminal(ProviderTerminal):
     def logout_manager(self) -> None:
         if self.current_manager is None:
             raise Exception("Error. No manager is logged in.")
-        self.current_manager == None
+        self.current_manager = None
 
     def request_member_report(self) -> None:
         if self.current_manager is None:
