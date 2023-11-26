@@ -57,7 +57,7 @@ class ProviderReport(report.Report):
         returnString = "Provider Report:\n"
         returnString += "\tProvider name: " + self.provider.name + "\n"
         returnString += "\tProvider ID number: " + str(self.provider.id) + "\n"
-        returnString += "\Provider address: " + self.provider.address + "\n"
+        returnString += "\tProvider address: " + self.provider.address + "\n"
         returnString += "\tProvider city: " + self.provider.city + "\n"
         returnString += "\tProvider state: " + self.provider.state + "\n"
         returnString += "\tProvider zip code: " + str(self.provider.zip_code) + "\n"
