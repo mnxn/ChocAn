@@ -1,7 +1,7 @@
+from datetime import datetime
 from . import user
 from . import system
 from .service import Record
-from datetime import datetime
 
 
 class ProviderTerminal:

@@ -1,14 +1,10 @@
-import decimal
+import os
+import json
+from io import open
+from decimal import Decimal
 from . import user
 from . import service
 from . import reports
-import os
-import glob
-import json
-import array
-
-from io import open
-from decimal import Decimal
 
 
 class System:

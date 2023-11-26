@@ -1,12 +1,13 @@
+import os
 from abc import ABC, abstractmethod
 from datetime import datetime
 from . import report
-import os
 
 
 class User(ABC):
     name: str
 
+    @abstractmethod
     def __init__(self, name: str) -> None:
         self.name = name
 
@@ -29,6 +30,7 @@ class UserAccount(User):
     state: str
     zip_code: int
 
+    @abstractmethod
     def __init__(
         self, name: str, id: int, address: str, city: str, state: str, zip_code: int
     ) -> None:
