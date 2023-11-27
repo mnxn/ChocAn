@@ -214,3 +214,137 @@ class ManagerTerminal(ProviderTerminal):
         if self.current_manager is None:
             raise Exception("Error. No manager is logged in.")
         self.current_system.issue_summary_report(self.current_manager)
+
+
+class InteractiveMode:
+    current_system: system.System
+
+    def __init__(self, system: system.System) -> None:
+        self.current_system = system
+
+    def run_command_menu(self) -> bool:
+        print("Commands:")
+        print("\t(1) Add Member")
+        print("\t(2) Delete Member")
+        print("\t(3) Update Member Information")
+        print("\t(4) Add Provider")
+        print("\t(5) Delete Provider")
+        print("\t(6) Update Provider Information")
+        print("\t(7) Run Weekly Actions")
+        print()
+        print("\t(8) Exit")
+        choice = input("Enter Command (1-8): ")
+        print()
+
+        if choice == "1":
+            self.add_member()
+        elif choice == "2":
+            self.delete_member()
+        elif choice == "3":
+            self.update_member()
+        elif choice == "4":
+            self.add_provider()
+        elif choice == "5":
+            self.delete_provider()
+        elif choice == "6":
+            self.update_provider()
+        elif choice == "7":
+            self.run_weekly_actions()
+        elif choice == "8":
+            return False
+        else:
+            raise Exception(f"Invalid command choice ({choice}).")
+
+        return True
+
+    def add_member(self) -> None:
+        name = input("Enter member name: ")
+        id = int(input("Enter member id: "))
+        address = input("Enter member address: ")
+        city = input("Enter member city: ")
+        state = input("Enter member state: ")
+        zip_code = int(input("Enter member zip code: "))
+
+        self.current_system.add_member(
+            user.Member(name, id, address, city, state, zip_code, False)
+        )
+
+    def delete_member(self):
+        id = int(input("Enter member id: "))
+        self.current_system.remove_member(id)
+
+    def update_member(self) -> None:
+        id = int(input("Enter member id: "))
+        member = self.current_system.lookup_member(id)
+
+        print("Member information:")
+        print("\t(1) Name")
+        print("\t(2) Address")
+        print("\t(3) City")
+        print("\t(4) State")
+        print("\t(5) Zip Code")
+        print("\t(6) Suspended Status")
+        choice = input("Select information to edit (1-6): ")
+        print()
+
+        if choice == "1":
+            member.name = input("New member name: ")
+        elif choice == "2":
+            member.address = input("New member address: ")
+        elif choice == "3":
+            member.city = input("New member city: ")
+        elif choice == "4":
+            member.state = input("New member state: ")
+        elif choice == "5":
+            member.zip_code = int(input("New member zip code: "))
+        elif choice == "6":
+            self.current_system.suspend_member(id)
+            print(f"Member suspended status set to {member.suspended}")
+        else:
+            raise Exception(f"Invalid choice ({choice}).")
+
+    def add_provider(self) -> None:
+        name = input("Enter provider name: ")
+        id = int(input("Enter provider id: "))
+        address = input("Enter provider address: ")
+        city = input("Enter provider city: ")
+        state = input("Enter provider state: ")
+        zip_code = int(input("Enter provider zip code: "))
+
+        self.current_system.add_provider(
+            user.Provider(name, id, address, city, state, zip_code)
+        )
+
+    def delete_provider(self):
+        id = int(input("Enter provider id: "))
+        self.current_system.remove_provider(id)
+
+    def update_provider(self) -> None:
+        id = int(input("Enter provider id: "))
+        provider = self.current_system.lookup_provider(id)
+
+        print("Provider information:")
+        print("\t(1) Name")
+        print("\t(2) Address")
+        print("\t(3) City")
+        print("\t(4) State")
+        print("\t(5) Suspended Status")
+        choice = input("Select information to edit (1-5): ")
+        print()
+
+        if choice == "1":
+            provider.name = input("New provider name: ")
+        elif choice == "2":
+            provider.address = input("New provider address: ")
+        elif choice == "3":
+            provider.city = input("New provider city: ")
+        elif choice == "4":
+            provider.state = input("New provider state: ")
+        elif choice == "5":
+            provider.zip_code = int(input("New provider zip code: "))
+        else:
+            raise Exception(f"Invalid choice ({choice}).")
+
+    def run_weekly_actions(self):
+        self.current_system.weekly_actions()
+        print("Weekly Actions Completed")
