@@ -1,5 +1,10 @@
 # ChocAn Simulator
 
+## Requirements
+
+- Python 3.10 or later
+- `mypy` (only for typechecking)
+
 ## Instructions
 
 - Run the program:
@@ -14,7 +19,7 @@
   python test_choc_an.py
   ```
 
-- Type check the source code:
+- Type check the source code (requires `mypy`):
 
   ```
   mypy choc_an test_choc_an.py
