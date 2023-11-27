@@ -100,8 +100,8 @@ class System:
         for data in self.provider_list:
             if data.id == id:
                 self.provider_list.remove(data)
-            return
-        self.write_files()
+                self.write_files()
+                return
 
     def lookup_provider(self, id: int) -> user.Provider:
         for data in self.provider_list:
