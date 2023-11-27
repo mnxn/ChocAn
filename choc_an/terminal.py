@@ -300,8 +300,11 @@ class InteractiveMode:
         elif choice == "6":
             self.current_system.suspend_member(id)
             print(f"Member suspended status set to {member.suspended}")
+            return
         else:
             raise Exception(f"Invalid choice ({choice}).")
+
+        self.current_system.write_files()
 
     def add_provider(self) -> None:
         name = input("Enter provider name: ")
@@ -344,6 +347,8 @@ class InteractiveMode:
             provider.zip_code = int(input("New provider zip code: "))
         else:
             raise Exception(f"Invalid choice ({choice}).")
+
+        self.current_system.write_files()
 
     def run_weekly_actions(self):
         self.current_system.weekly_actions()
