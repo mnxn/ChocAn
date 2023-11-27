@@ -300,7 +300,6 @@ class InteractiveMode:
         elif choice == "6":
             self.current_system.suspend_member(id)
             print(f"Member suspended status set to {member.suspended}")
-            return
         else:
             raise Exception(f"Invalid choice ({choice}).")
 
