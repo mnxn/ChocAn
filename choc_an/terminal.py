@@ -331,7 +331,7 @@ class InteractiveMode:
         print("\t(2) Address")
         print("\t(3) City")
         print("\t(4) State")
-        print("\t(5) Suspended Status")
+        print("\t(5) Zip Code")
         choice = input("Select information to edit (1-5): ")
         print()
 
