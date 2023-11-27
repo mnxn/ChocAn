@@ -84,15 +84,9 @@ class ProviderDirectory(report.Report):
     def output(self) -> str:
         returnString = "Provider Directory:\n"
         for service in self.service_list:
-            returnString += (
-                "\tService: "
-                + str(service.name)
-                + " Code: "
-                + str(service.code)
-                + " Fee: "
-                + str(service.fee)
-                + "\n"
-            )
+            returnString += "\tService: " + str(service.name) + "\n"
+            returnString += "\t\tCode: " + str(service.code) + "\n"
+            returnString += "\t\tFee: " + str(service.fee) + "\n"
         return returnString
 
 
