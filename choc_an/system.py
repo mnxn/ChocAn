@@ -374,8 +374,7 @@ class System:
 
 
     def write_data(self, save_data: list, path: str):
-        type_write: str = 'w'
         if (os.path.exists(path)):
-            type_write = 'x'
-        with open(path, type_write) as data_location:
+            os.remove(path)
+        with open(path, 'w') as data_location:
             json.dump(save_data, data_location, ensure_ascii=False, indent=4)
