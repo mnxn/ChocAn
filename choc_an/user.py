@@ -1,19 +1,21 @@
+import os
 from abc import ABC, abstractmethod
 from datetime import datetime
 from . import report
-import os
+
 
 class User(ABC):
     name: str
 
+    @abstractmethod
     def __init__(self, name: str) -> None:
         self.name = name
 
     def receive_report(self, report: report.Report) -> None:
         try:
             filename = f"{self.name}_{datetime.now().strftime('%Y-%m-%d')}.txt"
-            os.makedirs('reports', exist_ok=True)
-            with open(os.path.join('reports', filename), 'w') as file:
+            os.makedirs("reports", exist_ok=True)
+            with open(os.path.join("reports", filename), "w") as file:
                 file.write(report.output())
             print(f"Report saved to {os.path.join('reports', filename)}")
         except Exception as error:
@@ -28,6 +30,7 @@ class UserAccount(User):
     state: str
     zip_code: int
 
+    @abstractmethod
     def __init__(
         self, name: str, id: int, address: str, city: str, state: str, zip_code: int
     ) -> None:
@@ -71,7 +74,6 @@ class Member(UserAccount):
     ) -> None:
         super().__init__(name, id, address, city, state, zip_code)
         self.suspended = suspended
-
 
 
 class Provider(UserAccount):
