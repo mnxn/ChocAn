@@ -188,7 +188,7 @@ class System:
         data = f"{provider.name}, {provider.id}, {provider_fee}"
 
         # Create the directory if it doesn't exist
-        os.makedirs(path, exist_ok=True)
+        os.makedirs(os.path.dirname(path), exist_ok=True)
 
         # Write data to path
         with open(path, "a") as eft_file:
