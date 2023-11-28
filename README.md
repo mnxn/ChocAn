@@ -16,11 +16,11 @@
 - Run the tests:
 
   ```
-  python test_choc_an.py
+  python -m unittest discover
   ```
 
 - Type check the source code (requires `mypy`):
 
   ```
-  mypy choc_an test_choc_an.py
+  mypy choc_an tests
   ```
