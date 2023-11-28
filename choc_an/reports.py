@@ -22,7 +22,9 @@ class MemberReport(report.Report):
         returnString += "\tMember zipcode: " + str(self.member.zip_code) + "\n"
         for record in self.record_list:
             returnString += (
-                "\t\tDate of service: " + str(record.service_date_time) + "\n"
+                "\t\tDate of service: "
+                + record.service_date_time.strftime("%m-%d-%Y")
+                + "\n"
             )
             returnString += "\t\tProvider name: " + str(record.provider.name) + "\n"
             returnString += "\t\tService name: " + record.service.name + "\n"
@@ -62,8 +64,16 @@ class ProviderReport(report.Report):
         returnString += "\tProvider state: " + self.provider.state + "\n"
         returnString += "\tProvider zip code: " + str(self.provider.zip_code) + "\n"
         for record in self.record_list:
-            returnString += "\t\tService date: " + str(record.service_date_time) + "\n"
-            returnString += "\t\tCurrent date: " + str(record.current_date_time) + "\n"
+            returnString += (
+                "\t\tService date: "
+                + record.service_date_time.strftime("%m-%d-%Y")
+                + "\n"
+            )
+            returnString += (
+                "\t\tCurrent date: "
+                + record.current_date_time.strftime("%m-%d-%Y")
+                + "\n"
+            )
             returnString += "\t\tMember name: " + record.member.name + "\n"
             returnString += "\t\tMember number: " + str(record.member.id) + "\n"
             returnString += "\t\tService code: " + str(record.service.code) + "\n"

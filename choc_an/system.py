@@ -1,6 +1,7 @@
 import os
 import json
 from io import open
+from datetime import datetime
 from decimal import Decimal
 from . import user
 from . import service
@@ -325,8 +326,8 @@ class System:
 
     def record_to_json(self, convert: service.Record) -> dict:
         return {
-            "current_data_time": convert.current_date_time,
-            "service_data_time": convert.service_date_time,
+            "current_date_time": convert.current_date_time.timestamp(),
+            "service_date_time": convert.service_date_time.timestamp(),
             "provider": convert.provider.id,
             "member": convert.member.id,
             "service": convert.service.code,
@@ -346,13 +347,15 @@ class System:
         provider_data = self.lookup_provider(convert["provider"])
         service_data = self.lookup_service(convert["service"])
 
-        return service.Record(
-            convert["service_date_time"],
+        record = service.Record(
+            datetime.fromtimestamp(convert["service_date_time"]),
             provider_data,
             member_data,
             service_data,
             convert["comments"],
         )
+        record.current_date_time = datetime.fromtimestamp(convert["current_date_time"])
+        return record
 
     # load and save data
 
@@ -389,5 +392,5 @@ class System:
     def write_data(self, save_data: list, path: str):
         if os.path.exists(path):
             os.remove(path)
-        with open(path, 'w') as data_location:
+        with open(path, "w") as data_location:
             json.dump(save_data, data_location, ensure_ascii=False, indent=4)
