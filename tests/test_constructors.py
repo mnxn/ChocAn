@@ -125,7 +125,3 @@ class TestConstructors(unittest.TestCase):
             )
 
         service.Record(service_date_time, provider, member, provided_service, comments)
-
-
-if __name__ == "__main__":
-    unittest.main()
