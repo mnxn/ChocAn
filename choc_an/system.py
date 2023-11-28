@@ -211,7 +211,9 @@ class System:
                 if record.provider.id == provider.id:
                     provider_fee += record.service.fee
             if provider_fee != 0:
-                self.write_eft_data(provider, provider_fee, self.path + "/record/eft")
+                self.write_eft_data(
+                    provider, provider_fee, self.path + "/record/eft.txt"
+                )
 
     def members_to_json(self, convert: list[user.Member]) -> list[dict]:
         json_data: list[dict] = []
