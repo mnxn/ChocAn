@@ -105,8 +105,6 @@ class ProviderTerminal:
 
         date = input("Enter the service date (MM-DD-YYYY): ")
         month, day, year = map(int, date.split("-"))
-        service_date = datetime(month, day, year)
-
         service_date = datetime(year, month, day)
 
         while True:
