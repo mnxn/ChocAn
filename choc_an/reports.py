@@ -143,11 +143,11 @@ class SummaryReport(report.Report):
         returnString = "Summary Report:\n"
 
         for entry in self.entries:
-            returnString += "\tProvider" + str(entry.provider) + "\n"
+            returnString += ("\tProvider: " + str(entry.provider.name) + "\n")
             returnString += (
-                "\tNumber of consultations " + str(entry.number_of_consultations) + "\n"
+                "\tNumber of consultations: " + str(entry.number_of_consultations) + "\n"
             )
-            returnString += "\tTotal fee" + str(entry.total_fee) + "\n\n"
+            returnString += "\tTotal fee: " + str(entry.total_fee) + "\n\n"
 
         returnString += "\tTotal providers: " + str(self.total_providers) + "\n"
         returnString += "\tTotal consultations: " + str(self.total_consultations) + "\n"

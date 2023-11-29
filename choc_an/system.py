@@ -17,13 +17,15 @@ class System:
     record_list: list[service.Record]
 
     def __init__(self, path: str) -> None:
+        if not os.path.exists(path):
+            raise FileNotFoundError(f"The specified path does not exist: {path}")
         self.path = path
         self.member_list = []
         self.provider_list = []
         self.manager_list = []
         self.service_list = []
         self.record_list = []
-        self.load_files()
+        if path is not "tests": self.load_files()
 
     def load_files(self) -> None:
         self.load_members()
@@ -362,34 +364,44 @@ class System:
     # load and save data
 
     def load_members(self) -> None:
-        if os.path.exists(self.path + "/member/members.json"):
-            with open(self.path + "/member/members.json", "r") as data:
-                hold_data: list[dict] = json.load(data)
-                self.member_list = self.json_to_members(hold_data)
+        file_path = self.path + "/member/members.json"
+        if not os.path.exists(file_path):
+            raise FileNotFoundError(f"Members file not found at {file_path}")
+        with open(file_path, "r") as data:
+            hold_data: list[dict] = json.load(data)
+            self.member_list = self.json_to_members(hold_data)
 
     def load_providers(self) -> None:
-        if os.path.exists(self.path + "/provider/providers.json"):
-            with open(self.path + "/provider/providers.json", "r") as data:
-                info: list[dict] = json.load(data)
-                self.provider_list = self.json_to_providers(info)
+        file_path = self.path + "/provider/providers.json"
+        if not os.path.exists(file_path):
+            raise FileNotFoundError(f"Providers file not found at {file_path}")
+        with open(file_path, "r") as data:
+            info: list[dict] = json.load(data)
+            self.provider_list = self.json_to_providers(info)
 
     def load_managers(self) -> None:
-        if os.path.exists(self.path + "/manager/managers.json"):
-            with open(self.path + "/manager/managers.json", "r") as data:
-                info: list[dict] = json.load(data)
-                self.manager_list = self.json_to_managers(info)
+        file_path = self.path + "/manager/managers.json"
+        if not os.path.exists(file_path):
+            raise FileNotFoundError(f"Managers file not found at {file_path}")
+        with open(file_path, "r") as data:
+            info: list[dict] = json.load(data)
+            self.manager_list = self.json_to_managers(info)
 
     def load_services(self) -> None:
-        if os.path.exists(self.path + "/service/services.json"):
-            with open(self.path + "/service/services.json", "r") as data:
-                info: list[dict] = json.load(data)
-                self.service_list = self.json_to_services(info)
+        file_path = self.path + "/service/services.json"
+        if not os.path.exists(file_path):
+            raise FileNotFoundError(f"Services file not found at {file_path}")
+        with open(file_path, "r") as data:
+            info: list[dict] = json.load(data)
+            self.service_list = self.json_to_services(info)
 
     def load_records(self) -> None:
-        if os.path.exists(self.path + "/record/records.json"):
-            with open(self.path + "/record/records.json", "r") as data:
-                info: list[dict] = json.load(data)
-                self.record_list = self.json_to_records(info)
+        file_path = self.path + "/record/records.json"
+        if not os.path.exists(file_path):
+            raise FileNotFoundError(f"Records file not found at {file_path}")
+        with open(file_path, "r") as data:
+            info: list[dict] = json.load(data)
+            self.record_list = self.json_to_records(info)
 
     def write_data(self, save_data: list, path: str):
         if os.path.exists(path):
