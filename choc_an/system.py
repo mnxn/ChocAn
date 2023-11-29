@@ -24,7 +24,7 @@ class System:
         self.manager_list = []
         self.service_list = []
         self.record_list = []
-        self.readonly = bool
+        self.readonly: bool
         self.load_files()
 
     def load_files(self) -> None:
