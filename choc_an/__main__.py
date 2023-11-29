@@ -22,7 +22,7 @@ def prompt_terminal_mode(
 
 print("ChocAn Simulator Started")
 try:
-    system = System("data", readonly = False)
+    system = System("data")
 except Exception as e:
     print(e)
     exit(1)

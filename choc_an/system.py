@@ -15,9 +15,9 @@ class System:
     manager_list: list[user.Manager]
     service_list: list[service.Service]
     record_list: list[service.Record]
-    readonly: bool = False
+    readonly: bool
 
-    def __init__(self, path: str, readonly: bool) -> None:
+    def __init__(self, path: str, readonly: bool = False) -> None:
         self.path = path
         self.member_list = []
         self.provider_list = []
