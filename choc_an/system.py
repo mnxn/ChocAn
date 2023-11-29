@@ -15,14 +15,16 @@ class System:
     manager_list: list[user.Manager]
     service_list: list[service.Service]
     record_list: list[service.Record]
+    readonly: bool
 
-    def __init__(self, path: str) -> None:
+    def __init__(self, path: str, readonly: bool = False) -> None:
         self.path = path
         self.member_list = []
         self.provider_list = []
         self.manager_list = []
         self.service_list = []
         self.record_list = []
+        self.readonly = readonly
         self.load_files()
 
     def load_files(self) -> None:
@@ -67,13 +69,15 @@ class System:
 
     def add_member(self, new_member: user.Member) -> None:
         self.member_list.append(new_member)
-        self.write_files()
+        if not self.readonly:
+            self.write_files()
 
     def remove_member(self, id: int) -> None:
         for data in self.member_list:
             if data.id == id:
                 self.member_list.remove(data)
-                self.write_files()
+                if not self.readonly:
+                    self.write_files()
                 return
 
     # Since their is no unsuspend, if this was called by and they were
@@ -95,13 +99,15 @@ class System:
 
     def add_provider(self, new_provider: user.Provider) -> None:
         self.provider_list.append(new_provider)
-        self.write_files()
+        if not self.readonly:
+            self.write_files()
 
     def remove_provider(self, id: int) -> None:
         for data in self.provider_list:
             if data.id == id:
                 self.provider_list.remove(data)
-                self.write_files()
+                if not self.readonly:
+                    self.write_files()
                 return
 
     def lookup_provider(self, id: int) -> user.Provider:
@@ -124,7 +130,8 @@ class System:
 
     def record_service(self, record: service.Record) -> None:
         self.record_list.append(record)
-        self.write_files()
+        if not self.readonly:
+            self.write_files()
 
     def issue_member_report(self, member: user.Member) -> None:
         records: list[service.Record] = []
