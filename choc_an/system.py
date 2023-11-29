@@ -17,7 +17,7 @@ class System:
     record_list: list[service.Record]
     readonly: bool = False
 
-    def __init__(self, path: str, readonly: bool) -> None:
+    def __init__(self, path: str) -> None:
         self.path = path
         self.member_list = []
         self.provider_list = []
