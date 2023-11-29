@@ -15,16 +15,16 @@ class System:
     manager_list: list[user.Manager]
     service_list: list[service.Service]
     record_list: list[service.Record]
-    readonly: bool
+    readonly: bool = False
 
-    def __init__(self, path: str) -> None:
+    def __init__(self, path: str, readonly: bool) -> None:
         self.path = path
         self.member_list = []
         self.provider_list = []
         self.manager_list = []
         self.service_list = []
         self.record_list = []
-        self.readonly: bool
+        self.readonly = readonly
         self.load_files()
 
     def load_files(self) -> None:
