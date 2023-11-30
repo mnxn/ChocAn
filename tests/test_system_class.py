@@ -30,14 +30,8 @@ class TestSystemClass(unittest.TestCase):
             sys.load_records()
        
         sys2 = system.System("data")
-        manager=user.Manager("Harris Martin")
-        sys2.manager_list.append(manager)
-        self.assertEqual(len(sys2.manager_list), 1)
+        self.assertEqual(len(sys2.manager_list), 10)
         self.assertEqual(sys2.manager_list[0].name, "Harris Martin")
-        for data in sys2.manager_list:
-            if data.name == manager.name:
-                sys2.manager_list.remove(data)
-                sys2.write_files()
         #Each load function is almost the same, if one is correct then all are correct
     def test_write_files(self):
         sys = system.System("data") 
@@ -83,7 +77,7 @@ class TestSystemClass(unittest.TestCase):
         self.assertEqual(False, member_confirm.suspended)
 
     def test_lookup_member(self):
-        current_system = System("data")
+        current_system = system.System("data") 
         member_confirm = current_system.lookup_member(628574130)
         known_member = user.Member(
             name ="Harris Martin",
@@ -100,7 +94,7 @@ class TestSystemClass(unittest.TestCase):
         self.assertEqual(known_member.suspended, member_confirm.suspended)
 
     def test_add_provider(self):
-        current_system = System("data")
+        current_system =system.System("data") 
         test_provider = user.Provider(
             name = "Austin Myers",
             id = 123456789,
@@ -119,12 +113,12 @@ class TestSystemClass(unittest.TestCase):
         self.assertEqual(test_provider.city, confirm_provider.city)
         self.assertEqual(test_provider.state, confirm_provider.state)
         self.assertEqual(test_provider.zip_code, confirm_provider.zip_code)
-        
+        current_system.remove_provider(123456789)
 
         
 
     def test_remove_provider(self):
-        current_system = System("data")
+        current_system = system.System("data") 
         test_provider = user.Provider(
             name = "Austin Myers",
             id = 987654321,
@@ -144,7 +138,7 @@ class TestSystemClass(unittest.TestCase):
         self.assertEqual(str(context.exception), "Provider Not Found")
 
     def test_lookup_provider(self):
-        current_system = System("data")
+        current_system = system.System("data") 
         provider_confirm = current_system.lookup_provider(186972363)
         known_provider = user.Provider(
             name = "Miller Nelson",
@@ -164,7 +158,7 @@ class TestSystemClass(unittest.TestCase):
         pass
 
     def test_lookup_manager(self):
-        current_system = System("data")
+        current_system = system.System("data") 
         manager_confirm = current_system.lookup_manager("Gaven Martin")
         known_manager = user.Manager(
             name ="Gaven Martin"

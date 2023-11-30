@@ -17,7 +17,7 @@ class System:
     record_list: list[service.Record]
     readonly: bool
 
-    def __init__(self, path: str) -> None:
+    def __init__(self, path: str, readonly:bool=False) -> None:
         if not os.path.exists(path):
             raise FileNotFoundError(f"The specified path does not exist: {path}")
         self.path = path
@@ -28,7 +28,6 @@ class System:
         self.record_list = []
         if path is not "tests": self.load_files()
         self.readonly = readonly
-        self.load_files()
 
     def load_files(self) -> None:
         self.load_members()
