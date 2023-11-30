@@ -128,8 +128,8 @@ class System:
                 return data
         raise Exception("Service Not Found")
 
-    def record_service(self, record: service.Record) -> None:
-        self.record_list.append(record)
+    def record_service(self, Service: service.Service) -> None:
+        self.service_list.append(Service)
         if not self.readonly:
             self.write_files()
 
