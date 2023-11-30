@@ -3,6 +3,7 @@ from choc_an import system
 from datetime import datetime
 from choc_an import service, system, user
 from decimal import Decimal
+import os
 from datetime import datetime
 from decimal import Decimal
 from choc_an import service, user
@@ -212,10 +213,12 @@ class TestSystemClass(unittest.TestCase):
             state = "AR", zip_code= 51810,
             suspended = False
             )
+
+        path = '/reports/Harris Martin_2023-11-30.txt'
         current_system.issue_member_report(member)
+        check_file = os.path.exists(path)
 
-
-
+        self.assertTrue(check_file, msg="report not made")
 
     def test_issue_provider_report(self):
         pass
