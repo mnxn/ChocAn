@@ -1,8 +1,10 @@
 import unittest
-from choc_an import system
+import os
 from datetime import datetime
-from choc_an import service, system, user
 from decimal import Decimal
+from choc_an import service, system, user
+from choc_an.system import System
+from choc_an.service import Record
 
 class TestSystemClass(unittest.TestCase):
     def test_system(self):
@@ -11,9 +13,9 @@ class TestSystemClass(unittest.TestCase):
             system.System(nonexistent_path)
         the_exception = cm.exception
         self.assertEqual(str(the_exception), f"The specified path does not exist: {nonexistent_path}")
-        
+
     def test_load_files(self):
-        sys = system.System("tests") 
+        sys = system.System("tests")
         with self.assertRaises(FileNotFoundError):
             sys.load_members()
 
@@ -28,13 +30,13 @@ class TestSystemClass(unittest.TestCase):
 
         with self.assertRaises(FileNotFoundError):
             sys.load_records()
-       
+
         sys2 = system.System("data")
         self.assertEqual(len(sys2.manager_list), 10)
         self.assertEqual(sys2.manager_list[0].name, "Harris Martin")
         #Each load function is almost the same, if one is correct then all are correct
     def test_write_files(self):
-        sys = system.System("data") 
+        sys = system.System("data")
         member=user.Member("Member", 123456789, "address1", "Portland", "OR", 99999, False)
         sys.member_list.append(member)
         sys.write_files()
@@ -49,7 +51,7 @@ class TestSystemClass(unittest.TestCase):
         sys.remove_member(123456789)
         #The write_file() function just calls the write_data() function multiple times and only needs to test whether write_data() is correct, so it is enough to only test writing member.json
     def test_add_member(self):
-        sys = system.System("data") 
+        sys = system.System("data")
         member=user.Member("Member2", 123456780, "address1", "Portland", "OR", 99999, False)
         sys.add_member(member)
         member_confirm=sys.lookup_member(123456780)
@@ -61,14 +63,14 @@ class TestSystemClass(unittest.TestCase):
         self.assertEqual(member.suspended, member_confirm.suspended)
 
     def test_remove_member(self):
-        sys = system.System("data") 
+        sys = system.System("data")
         sys.remove_member(123456780)
         with self.assertRaises(Exception) as context:
             sys.lookup_member(123456780)
         self.assertEqual(str(context.exception), "Member not Found")
 
     def test_suspend_member(self):
-        sys = system.System("data") 
+        sys = system.System("data")
         sys.suspend_member(258137067)
         member_confirm=sys.lookup_member(258137067)
         self.assertEqual(True, member_confirm.suspended)
@@ -77,7 +79,7 @@ class TestSystemClass(unittest.TestCase):
         self.assertEqual(False, member_confirm.suspended)
 
     def test_lookup_member(self):
-        current_system = system.System("data") 
+        current_system = system.System("data")
         member_confirm = current_system.lookup_member(628574130)
         known_member = user.Member(
             name ="Harris Martin",
@@ -86,7 +88,7 @@ class TestSystemClass(unittest.TestCase):
             state = "AR", zip_code= 51810,
             suspended = False
             )
-        
+
         self.assertEqual(known_member.name, member_confirm.name)
         self.assertEqual(known_member.id, member_confirm.id)
         self.assertEqual(known_member.state, member_confirm.state)
@@ -94,7 +96,7 @@ class TestSystemClass(unittest.TestCase):
         self.assertEqual(known_member.suspended, member_confirm.suspended)
 
     def test_add_provider(self):
-        current_system =system.System("data") 
+        current_system =system.System("data")
         test_provider = user.Provider(
             name = "Austin Myers",
             id = 123456789,
@@ -115,10 +117,10 @@ class TestSystemClass(unittest.TestCase):
         self.assertEqual(test_provider.zip_code, confirm_provider.zip_code)
         current_system.remove_provider(123456789)
 
-        
+
 
     def test_remove_provider(self):
-        current_system = system.System("data") 
+        current_system = system.System("data")
         test_provider = user.Provider(
             name = "Austin Myers",
             id = 987654321,
@@ -138,7 +140,7 @@ class TestSystemClass(unittest.TestCase):
         self.assertEqual(str(context.exception), "Provider Not Found")
 
     def test_lookup_provider(self):
-        current_system = system.System("data") 
+        current_system = system.System("data")
         provider_confirm = current_system.lookup_provider(186972363)
         known_provider = user.Provider(
             name = "Miller Nelson",
@@ -148,7 +150,7 @@ class TestSystemClass(unittest.TestCase):
             state = "NC",
             zip_code = 60337
         )
-        
+
         self.assertEqual(known_provider.name, provider_confirm.name)
         self.assertEqual(known_provider.id, provider_confirm.id)
         self.assertEqual(known_provider.address, provider_confirm.address)
@@ -158,14 +160,14 @@ class TestSystemClass(unittest.TestCase):
         pass
 
     def test_lookup_manager(self):
-        current_system = system.System("data") 
+        current_system = system.System("data")
         manager_confirm = current_system.lookup_manager("Gaven Martin")
         known_manager = user.Manager(
             name ="Gaven Martin"
             )
-        
+
         self.assertEqual(known_manager.name, manager_confirm.name)
-        
+
 
     def test_lookup_service(self):
         current_system: system.System = System("data")
@@ -179,19 +181,68 @@ class TestSystemClass(unittest.TestCase):
         self.assertEqual(service_fee, find_service.fee)
 
     def test_record_service(self):
-        pass
+        current_system = System("data", readonly = True)
+        service_date_time = datetime.now()
+
+        provider = current_system.lookup_provider(404008286)
+        member = current_system.lookup_member(518959495)
+        provided_service = current_system.lookup_service(350353)
+        comments = ""
+        record = Record(service_date_time, provider, member, provided_service, comments)
+
+        before_append = len(current_system.record_list)
+        current_system.record_service(record)
+        after_append = len(current_system.record_list)
+
+        self.assertEqual(before_append + 1, after_append, msg="record not added to record list")
 
     def test_issue_member_report(self):
-        pass
+        current_system = System("data", readonly = True)
+        member = current_system.lookup_member(628574130)
+
+        date = datetime.now().strftime("%Y-%m-%d")
+
+        path = f"reports/Harris Martin_{date}.txt"
+        current_system.issue_member_report(member)
+        check_file = os.path.exists(path)
+
+        self.assertTrue(check_file, msg="report not made")
 
     def test_issue_provider_report(self):
-        pass
+        current_system = System("data", readonly = True)
+        provider = current_system.lookup_provider(186972363)
+
+        date = datetime.now().strftime("%Y-%m-%d")
+
+        path = f"reports/Miller Nelson_{date}.txt"
+        current_system.issue_provider_report(provider)
+        check_file = os.path.exists(path)
+
+        self.assertTrue(check_file, msg="report not made")
 
     def test_issue_provider_directory(self):
-        pass
+        current_system = System("data", readonly = True)
+        provider = current_system.lookup_provider(207695080)
+
+        date = datetime.now().strftime("%Y-%m-%d")
+
+        path = f"reports/Thompson Taylor_{date}.txt"
+        current_system.issue_provider_directory(provider)
+        check_file = os.path.exists(path)
+
+        self.assertTrue(check_file, msg="service directory not issued")
 
     def test_issue_summary_report(self):
-        pass
+        current_system = System("data", readonly = True)
+        manager = current_system.lookup_manager("Adam Striven")
+
+        date = datetime.now().strftime("%Y-%m-%d")
+
+        path = f"reports/Adam Striven_{date}.txt"
+        current_system.issue_summary_report(manager)
+        check_file = os.path.exists(path)
+
+        self.assertTrue(check_file, msg="summary report not made")
 
     def test_write_eft_data(self):
         pass
