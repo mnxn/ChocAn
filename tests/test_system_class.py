@@ -44,7 +44,7 @@ class TestSystemClass(unittest.TestCase):
         member=user.Member("Member", 123456789, "address1", "Portland", "OR", 99999, False)
         sys.member_list.append(member)
         sys.write_files()
-        
+        sys.load_files()
         member_confirm=sys.lookup_member(123456789)
         self.assertEqual(member.name, member_confirm.name)
         self.assertEqual(member.id, member_confirm.id)
