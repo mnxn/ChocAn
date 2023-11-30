@@ -26,7 +26,7 @@ class System:
         self.manager_list = []
         self.service_list = []
         self.record_list = []
-        if path is not "tests": self.load_files()
+        if path != "tests": self.load_files()
         self.readonly = readonly
 
     def load_files(self) -> None:

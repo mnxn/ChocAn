@@ -1,12 +1,8 @@
 import unittest
-from choc_an import system
-from datetime import datetime
-from choc_an import service, system, user
-from decimal import Decimal
 import os
 from datetime import datetime
 from decimal import Decimal
-from choc_an import service, user
+from choc_an import service, system, user
 from choc_an.system import System
 from choc_an.service import Record
 
@@ -184,7 +180,6 @@ class TestSystemClass(unittest.TestCase):
         self.assertEqual(service_code, find_service.code)
         self.assertEqual(service_fee, find_service.fee)
 
-# complete unit tests below ----------------------------------------------------------------
     def test_record_service(self):
         current_system = System("data", readonly = True)
 
@@ -214,7 +209,11 @@ class TestSystemClass(unittest.TestCase):
             suspended = False
             )
 
-        path = '/reports/Harris Martin_2023-11-30.txt'
+        date = datetime.now().strftime("%Y-%m-%d")
+
+        path = f"reports/Harris Martin_{date}.txt"
+        print("path: ",path)
+        print(os.getcwd())
         current_system.issue_member_report(member)
         check_file = os.path.exists(path)
 
