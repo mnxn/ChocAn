@@ -3,8 +3,6 @@ import os
 from datetime import datetime
 from decimal import Decimal
 from choc_an import service, system, user
-from choc_an.system import System
-from choc_an.service import Record
 
 
 class TestSystemClass(unittest.TestCase):
@@ -176,7 +174,7 @@ class TestSystemClass(unittest.TestCase):
         self.assertEqual(known_manager.name, manager_confirm.name)
 
     def test_lookup_service(self) -> None:
-        current_system: system.System = System("data")
+        current_system: system.System = system.System("data")
         service_name: str = "time of number"
         service_code: int = 388592
         service_fee: Decimal = Decimal(454)
@@ -187,14 +185,16 @@ class TestSystemClass(unittest.TestCase):
         self.assertEqual(service_fee, find_service.fee)
 
     def test_record_service(self) -> None:
-        current_system = System("data", readonly=True)
+        current_system = system.System("data", readonly=True)
         service_date_time = datetime.now()
 
         provider = current_system.lookup_provider(404008286)
         member = current_system.lookup_member(518959495)
         provided_service = current_system.lookup_service(350353)
         comments = ""
-        record = Record(service_date_time, provider, member, provided_service, comments)
+        record = service.Record(
+            service_date_time, provider, member, provided_service, comments
+        )
 
         before_append = len(current_system.record_list)
         current_system.record_service(record)
@@ -205,7 +205,7 @@ class TestSystemClass(unittest.TestCase):
         )
 
     def test_issue_member_report(self) -> None:
-        current_system = System("data", readonly=True)
+        current_system = system.System("data", readonly=True)
         member = current_system.lookup_member(628574130)
 
         date = datetime.now().strftime("%Y-%m-%d")
@@ -217,7 +217,7 @@ class TestSystemClass(unittest.TestCase):
         self.assertTrue(check_file, msg="report not made")
 
     def test_issue_provider_report(self) -> None:
-        current_system = System("data", readonly=True)
+        current_system = system.System("data", readonly=True)
         provider = current_system.lookup_provider(186972363)
 
         date = datetime.now().strftime("%Y-%m-%d")
@@ -229,7 +229,7 @@ class TestSystemClass(unittest.TestCase):
         self.assertTrue(check_file, msg="report not made")
 
     def test_issue_provider_directory(self) -> None:
-        current_system = System("data", readonly=True)
+        current_system = system.System("data", readonly=True)
         provider = current_system.lookup_provider(207695080)
 
         date = datetime.now().strftime("%Y-%m-%d")
@@ -241,7 +241,7 @@ class TestSystemClass(unittest.TestCase):
         self.assertTrue(check_file, msg="service directory not issued")
 
     def test_issue_summary_report(self) -> None:
-        current_system = System("data", readonly=True)
+        current_system = system.System("data", readonly=True)
         manager = current_system.lookup_manager("Adam Striven")
 
         date = datetime.now().strftime("%Y-%m-%d")
