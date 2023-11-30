@@ -3,8 +3,8 @@ from datetime import datetime
 from decimal import Decimal
 from choc_an import user, service, reports
  
-class testReportOutput(unittest.TestCase):
-    def testMemberOutput(self):
+class TestReportOutput(unittest.TestCase):
+    def test_Member_Output(self):
         member = user.Member("Member", 123456789, "address1", "Portland", "OR", 99999, False)
         provider = user.Provider("Provider", 987654321, "address2", "Portland", "OR", 99999)
         services = service.Service("Services",123456,Decimal("999.99"))
@@ -24,7 +24,7 @@ Member Report:
 """
         self.assertEqual(member_report.output().strip(), expected_output.strip())
 
-    def testProviderOutput(self):
+    def test_Provider_Output(self):
         provider = user.Provider("Provider", 987654321, "address2", "Portland", "OR", 99999)
         member = user.Member("Member", 123456789, "address1", "Portland", "OR", 99999, False)
         services = service.Service("Services", 123456, Decimal("999.99"))
@@ -48,7 +48,7 @@ Member Report:
         #This is done because I cannot effectively predict the current_date data
     
     
-    def testSummaryOutput(self):
+    def test_Summary_Output(self):
         provider = user.Provider("name", 987654321, "address2", "Portland", "OR", 99999)
         lists = [reports.SummaryReportEntry(provider, 10, Decimal("9999.99"))]
         summary_report = reports.SummaryReport(lists, 1, 10, Decimal("9999.99"))
@@ -64,7 +64,7 @@ Summary Report:
 """
         self.assertEqual(summary_report.output().strip(), expected_output.strip())
     
-    def testProviderDirectory(self):
+    def test_Provider_Directory(self):
         services_list = [
         service.Service("Services1", 123456, Decimal("999.99")),
         service.Service("Services2", 654321, Decimal("199.99"))

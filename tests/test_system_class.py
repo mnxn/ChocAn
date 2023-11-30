@@ -30,8 +30,14 @@ class TestSystemClass(unittest.TestCase):
             sys.load_records()
        
         sys2 = system.System("data")
+        manager=user.Manager("Harris Martin")
+        sys2.manager_list.append(manager)
         self.assertEqual(len(sys2.manager_list), 1)
         self.assertEqual(sys2.manager_list[0].name, "Harris Martin")
+        for data in sys2.manager_list:
+            if data.name == manager.name:
+                sys2.manager_list.remove(data)
+                sys2.write_files()
         #Each load function is almost the same, if one is correct then all are correct
     def test_write_files(self):
         sys = system.System("data") 
@@ -46,6 +52,7 @@ class TestSystemClass(unittest.TestCase):
         self.assertEqual(member.state, member_confirm.state)
         self.assertEqual(member.city, member_confirm.city)
         self.assertEqual(member.suspended, member_confirm.suspended)
+        sys.remove_member(123456789)
         #The write_file() function just calls the write_data() function multiple times and only needs to test whether write_data() is correct, so it is enough to only test writing member.json
     def test_add_member(self):
         sys = system.System("data") 
@@ -68,11 +75,11 @@ class TestSystemClass(unittest.TestCase):
 
     def test_suspend_member(self):
         sys = system.System("data") 
-        sys.suspend_member(123456789)
-        member_confirm=sys.lookup_member(123456789)
+        sys.suspend_member(258137067)
+        member_confirm=sys.lookup_member(258137067)
         self.assertEqual(True, member_confirm.suspended)
-        sys.suspend_member(123456789)
-        member_confirm=sys.lookup_member(123456789)
+        sys.suspend_member(258137067)
+        member_confirm=sys.lookup_member(258137067)
         self.assertEqual(False, member_confirm.suspended)
 
     def test_lookup_member(self):

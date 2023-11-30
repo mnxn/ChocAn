@@ -133,32 +133,5 @@
         "state": "CO",
         "zip_code": 68866,
         "suspended": false
-    },
-    {
-        "name": "Member",
-        "id": 123456789,
-        "address": "address1",
-        "city": "Portland",
-        "state": "OR",
-        "zip_code": 99999,
-        "suspended": false
-    },
-    {
-        "name": "Member",
-        "id": 123456789,
-        "address": "address1",
-        "city": "Portland",
-        "state": "OR",
-        "zip_code": 99999,
-        "suspended": false
-    },
-    {
-        "name": "Member",
-        "id": 123456789,
-        "address": "address1",
-        "city": "Portland",
-        "state": "OR",
-        "zip_code": 99999,
-        "suspended": false
     }
 ]
