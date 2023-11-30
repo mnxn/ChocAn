@@ -182,14 +182,11 @@ class TestSystemClass(unittest.TestCase):
 
     def test_record_service(self):
         current_system = System("data", readonly = True)
-
-        city = "City"
-        state = "AB"
-        zip_code = 12345
         service_date_time = datetime.now()
-        provider = user.Provider("provider", 123456789, "address1", city, state, zip_code)
-        member = user.Member("member", 978654321, "address2", city, state, zip_code, False)
-        provided_service = service.Service("name", 123456, Decimal("123.45"))
+
+        provider = current_system.lookup_provider(404008286)
+        member = current_system.lookup_member(518959495)
+        provided_service = current_system.lookup_service(350353)
         comments = ""
         record = Record(service_date_time, provider, member, provided_service, comments)
 
@@ -197,17 +194,11 @@ class TestSystemClass(unittest.TestCase):
         current_system.record_service(record)
         after_append = len(current_system.record_list)
 
-        self.assertNotEqual(before_append, after_append, msg="record not added to record list")
+        self.assertEqual(before_append + 1, after_append, msg="record not added to record list")
 
     def test_issue_member_report(self):
         current_system = System("data", readonly = True)
-        member = user.Member(
-            name ="Harris Martin",
-            id = 628574130, address = "2 Homestead St. ",
-            city = "Sheffield",
-            state = "AR", zip_code= 51810,
-            suspended = False
-            )
+        member = current_system.lookup_member(628574130)
 
         date = datetime.now().strftime("%Y-%m-%d")
 
@@ -219,14 +210,7 @@ class TestSystemClass(unittest.TestCase):
 
     def test_issue_provider_report(self):
         current_system = System("data", readonly = True)
-        provider = user.Provider(
-            name = "Miller Nelson",
-            id = 186972363,
-            address = "7304 St Louis St. ",
-            city = "Anchorage",
-            state = "NC",
-            zip_code = 60337
-        )
+        provider = current_system.lookup_provider(186972363)
 
         date = datetime.now().strftime("%Y-%m-%d")
 
@@ -238,14 +222,7 @@ class TestSystemClass(unittest.TestCase):
 
     def test_issue_provider_directory(self):
         current_system = System("data", readonly = True)
-        provider = user.Provider(
-            name = "Thompson Taylor",
-            id = 207695080,
-            address = "678 Glenridge St. ",
-            city = "Chelsea",
-            state = "NC",
-            zip_code = 39530
-        )
+        provider = current_system.lookup_provider(207695080)
 
         date = datetime.now().strftime("%Y-%m-%d")
 
@@ -257,9 +234,7 @@ class TestSystemClass(unittest.TestCase):
 
     def test_issue_summary_report(self):
         current_system = System("data", readonly = True)
-        manager = user.Manager(
-            name = "Adam Striven"
-        )
+        manager = current_system.lookup_manager("Adam Striven")
 
         date = datetime.now().strftime("%Y-%m-%d")
 
