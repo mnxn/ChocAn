@@ -212,33 +212,62 @@ class TestSystemClass(unittest.TestCase):
         date = datetime.now().strftime("%Y-%m-%d")
 
         path = f"reports/Harris Martin_{date}.txt"
-        print("path: ",path)
-        print(os.getcwd())
         current_system.issue_member_report(member)
         check_file = os.path.exists(path)
 
         self.assertTrue(check_file, msg="report not made")
 
     def test_issue_provider_report(self):
-        pass
+        current_system = System("data", readonly = True)
+        provider = user.Provider(
+            name = "Miller Nelson",
+            id = 186972363,
+            address = "7304 St Louis St. ",
+            city = "Anchorage",
+            state = "NC",
+            zip_code = 60337
+        )
+
+        date = datetime.now().strftime("%Y-%m-%d")
+
+        path = f"reports/Miller Nelson_{date}.txt"
+        current_system.issue_provider_report(provider)
+        check_file = os.path.exists(path)
+
+        self.assertTrue(check_file, msg="report not made")
 
     def test_issue_provider_directory(self):
-        pass
+        current_system = System("data", readonly = True)
+        provider = user.Provider(
+            name = "Thompson Taylor",
+            id = 207695080,
+            address = "678 Glenridge St. ",
+            city = "Chelsea",
+            state = "NC",
+            zip_code = 39530
+        )
+
+        date = datetime.now().strftime("%Y-%m-%d")
+
+        path = f"reports/Thompson Taylor_{date}.txt"
+        current_system.issue_provider_directory(provider)
+        check_file = os.path.exists(path)
+
+        self.assertTrue(check_file, msg="service directory not issued")
 
     def test_issue_summary_report(self):
-        pass
+        current_system = System("data", readonly = True)
+        manager = user.Manager(
+            name = "Adam Striven"
+        )
+
+        date = datetime.now().strftime("%Y-%m-%d")
+
+        path = f"reports/Adam Striven_{date}.txt"
+        current_system.issue_summary_report(manager)
+        check_file = os.path.exists(path)
+
+        self.assertTrue(check_file, msg="summary report not made")
 
     def test_write_eft_data(self):
         pass
-        # city = "City"
-        # state = "AB"
-        # zip_code = 12345
-        # service_date_time = datetime.now()
-        # provider_recorded = user.Provider(
-        #     "provider", 123456789, "address1", city, state, zip_code
-        # )
-        # member_recorded = user.Member(
-        #     "member", 978654321, "address2", city, state, zip_code, False
-        # )
-        # provided_service = service.Service("name", 123456, Decimal("123.45"))
-        # comments = ""
