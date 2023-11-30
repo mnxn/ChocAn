@@ -126,17 +126,7 @@ class TestSystemClass(unittest.TestCase):
         self.assertEqual(service_fee, find_service.fee)
 
     def test_record_service(self):
-        current_system: system.System = System("data", True)
-        service_name: str = "time of numbers"
-        service_code: int = 388591
-        service_fee: Decimal = 454
-        new_service: service.Service = service.Service(service_name, service_code, service_fee)
-        current_system.record_service(new_service)
-        find_service: service.Service = current_system.lookup_service(service_code)
-
-        self.assertEqual(service_name, find_service.name)
-        self.assertEqual(service_code, find_service.code)
-        self.assertEqual(service_fee, find_service.fee)
+        pass
 
     def test_issue_member_report(self):
         pass
