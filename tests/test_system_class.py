@@ -262,7 +262,7 @@ class TestSystemClass(unittest.TestCase):
         sys=system.System("data")
         date = datetime.now().strftime("%Y-%m-%d")
         test_path = f"reports/eft_{date}.txt"
-        sys.write_eft_data(provider,999.99,test_path)
+        sys.write_eft_data(provider,Decimal('999.99'),test_path)
         self.assertTrue(os.path.exists(test_path), "EFT file does not exist.")
         with open(test_path, 'r') as file:
             data = file.read()
