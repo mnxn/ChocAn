@@ -58,7 +58,7 @@ class TestConstructors(unittest.TestCase):
 
         with self.assertRaises(ValueError, msg="total_fee too long"):
             reports.ProviderReport(
-                provider, record_list, total_consultations, Decimal("1234.56")
+                provider, record_list, total_consultations, Decimal("123456.78")
             )
 
         reports.ProviderReport(provider, record_list, total_consultations, total_fee)

@@ -1,7 +1,5 @@
 from decimal import Decimal
-from . import report
-from . import user
-from . import service
+from choc_an import report, service, user
 
 
 class MemberReport(report.Report):
@@ -47,8 +45,8 @@ class ProviderReport(report.Report):
     ) -> None:
         if total_consultations > 999:
             raise ValueError("total_consultations cannot have more than 3 digits")
-        if total_fee > Decimal("999.99"):
-            raise ValueError("total_fee cannot be more than $999.99")
+        if total_fee > Decimal("99999.99"):
+            raise ValueError("total_fee cannot be more than $99,999.99")
 
         self.provider = provider
         self.record_list = record_list
@@ -143,9 +141,11 @@ class SummaryReport(report.Report):
         returnString = "Summary Report:\n"
 
         for entry in self.entries:
-            returnString += ("\tProvider: " + str(entry.provider.name) + "\n")
+            returnString += "\tProvider: " + str(entry.provider.name) + "\n"
             returnString += (
-                "\tNumber of consultations: " + str(entry.number_of_consultations) + "\n"
+                "\tNumber of consultations: "
+                + str(entry.number_of_consultations)
+                + "\n"
             )
             returnString += "\tTotal fee: " + str(entry.total_fee) + "\n\n"
 

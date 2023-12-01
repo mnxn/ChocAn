@@ -10,13 +10,13 @@
 - Run the program:
 
   ```
-  python -m choc_an
+  python3 -m choc_an
   ```
 
 - Run the tests:
 
   ```
-  python -m unittest discover
+  python3 -m unittest discover
   ```
 
 - Type check the source code (requires `mypy`):
