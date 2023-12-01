@@ -258,4 +258,14 @@ class TestSystemClass(unittest.TestCase):
         self.assertTrue(check_file, msg="summary report not made")
 
     def test_write_eft_data(self) -> None:
-        pass
+        provider=user.Provider("name",123456789,"address","portland","OR",97217)
+        sys=system.System("data")
+        date = datetime.now().strftime("%Y-%m-%d")
+        test_path = f"reports/eft_{date}.txt"
+        sys.write_eft_data(provider,999.99,test_path)
+        self.assertTrue(os.path.exists(test_path), "EFT file does not exist.")
+        with open(test_path, 'r') as file:
+            data = file.read()
+            expected_data = f"{provider.name}, {provider.id}, {Decimal('999.99')}"
+            self.assertIn(expected_data, data, "The file does not contain the expected data.")
+        os.remove(test_path)
