@@ -1,7 +1,5 @@
 from decimal import Decimal
-from choc_an import report
-from choc_an import user
-from choc_an import service
+from choc_an import report, service, user
 
 
 class MemberReport(report.Report):
