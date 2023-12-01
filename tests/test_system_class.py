@@ -170,7 +170,6 @@ class TestSystemClass(unittest.TestCase):
         self.assertEqual(known_provider.state, provider_confirm.state)
         self.assertEqual(known_provider.city, provider_confirm.city)
         self.assertEqual(known_provider.zip_code, provider_confirm.zip_code)
-        pass
 
     def test_lookup_manager(self) -> None:
         current_system = system.System("data")
