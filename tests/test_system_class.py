@@ -22,7 +22,7 @@ class TestSystemClass(unittest.TestCase):
         )
 
     def test_load_files(self) -> None:
-        sys = system.System("tests")
+        sys = system.System("tests", load=False)
         with self.assertRaises(FileNotFoundError):
             sys.load_members()
 
