@@ -3,9 +3,7 @@ import json
 from io import open
 from datetime import datetime
 from decimal import Decimal
-from . import user
-from . import service
-from . import reports
+from choc_an import reports, service, user
 
 
 class System:
@@ -17,7 +15,7 @@ class System:
     record_list: list[service.Record]
     readonly: bool
 
-    def __init__(self, path: str, readonly:bool=False) -> None:
+    def __init__(self, path: str, readonly: bool = False) -> None:
         if not os.path.exists(path):
             raise FileNotFoundError(f"The specified path does not exist: {path}")
         self.path = path
@@ -26,8 +24,10 @@ class System:
         self.manager_list = []
         self.service_list = []
         self.record_list = []
-        if path != "tests": self.load_files()
         self.readonly = readonly
+
+        if path != "tests":
+            self.load_files()
 
     def load_files(self) -> None:
         self.load_members()

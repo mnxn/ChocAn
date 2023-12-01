@@ -1,7 +1,5 @@
 from datetime import datetime
-from . import user
-from . import system
-from .service import Record
+from choc_an import user, system, service
 
 
 class ProviderTerminal:
@@ -109,15 +107,19 @@ class ProviderTerminal:
 
         while True:
             code = int(input("Enter the service code"))
-            service = self.current_system.lookup_service(code)
-            print(service.name)
+            current_service = self.current_system.lookup_service(code)
+            print(current_service.name)
             user = str(input("Is this the correct service?(y/n) "))
             if user == "Y" or user == "y":
                 break
 
         comments = str(input("Enter Comments: "))
-        record = Record(
-            service_date, self.current_provider, self.current_member, service, comments
+        record = service.Record(
+            service_date,
+            self.current_provider,
+            self.current_member,
+            current_service,
+            comments,
         )
         self.current_system.record_service(record)
 

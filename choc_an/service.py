@@ -1,6 +1,6 @@
 from decimal import Decimal
 from datetime import datetime
-from . import user
+from choc_an import user
 
 
 class Service:

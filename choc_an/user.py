@@ -1,7 +1,7 @@
 import os
 from abc import ABC, abstractmethod
 from datetime import datetime
-from . import report
+from choc_an import report
 
 
 class User(ABC):
