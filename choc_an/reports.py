@@ -69,7 +69,7 @@ class ProviderReport(report.Report):
             )
             returnString += (
                 "\t\tCurrent date: "
-                + record.current_date_time.strftime("%m-%d-%Y")
+                + record.current_date_time.strftime("%m-%d-%Y %H:%M:%S")
                 + "\n"
             )
             returnString += "\t\tMember name: " + record.member.name + "\n"
