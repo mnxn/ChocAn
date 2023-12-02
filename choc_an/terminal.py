@@ -94,7 +94,7 @@ class ProviderTerminal:
         if self.current_provider is None:
             raise Exception("Error. No provider logged in.")
 
-        id = int(input("Enter Member ID: "))
+        id = int(input("Re-Scan Member ID: "))
         if id != self.current_member.id:
             raise Exception("Error. Incorrect member ID.")
 

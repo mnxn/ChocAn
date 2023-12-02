@@ -336,8 +336,10 @@ class System:
 
     def record_to_json(self, convert: service.Record) -> dict:
         return {
-            "current_date_time": convert.current_date_time.timestamp(),
-            "service_date_time": convert.service_date_time.timestamp(),
+            "current_date_time": convert.current_date_time.strftime(
+                "%m-%d-%Y %H:%M:%S"
+            ),
+            "service_date_time": convert.service_date_time.strftime("%m-%d-%Y"),
             "provider": convert.provider.id,
             "member": convert.member.id,
             "service": convert.service.code,
@@ -358,13 +360,15 @@ class System:
         service_data = self.lookup_service(convert["service"])
 
         record = service.Record(
-            datetime.fromtimestamp(convert["service_date_time"]),
+            datetime.strptime(convert["service_date_time"], "%m-%d-%Y"),
             provider_data,
             member_data,
             service_data,
             convert["comments"],
         )
-        record.current_date_time = datetime.fromtimestamp(convert["current_date_time"])
+        record.current_date_time = datetime.strptime(
+            convert["current_date_time"], "%m-%d-%Y %H:%M:%S"
+        )
         return record
 
     # load and save data
