@@ -180,7 +180,7 @@ class TestSystemClass(unittest.TestCase):
 
     def test_lookup_service(self) -> None:
         current_system: system.System = system.System("data")
-        service_name: str = "time of number"
+        service_name: str = "chocvaccination"
         service_code: int = 388592
         service_fee: Decimal = Decimal(454)
         find_service: service.Service = current_system.lookup_service(service_code)
@@ -258,7 +258,7 @@ class TestSystemClass(unittest.TestCase):
         self.assertTrue(check_file, msg="summary report not made")
 
     def test_write_eft_data(self) -> None:
-        
+
         sys=system.System("data")
         provider=sys.lookup_provider(570619233)
         date = datetime.now().strftime("%Y-%m-%d")

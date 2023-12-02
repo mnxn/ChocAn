@@ -1,76 +1,101 @@
 [
     {
-        "name": "fact  of child",
+        "name": "choc-rehabilitation",
         "code": 986198,
         "fee": 751
     },
     {
-        "name": "case of fact ",
+        "name": "choctherapy",
         "code": 350353,
         "fee": 870
     },
     {
-        "name": "time of number",
+        "name": "chocvaccination",
         "code": 388592,
         "fee": 454
     },
     {
-        "name": "point of problem",
+        "name": "de-chocification",
         "code": 418443,
         "fee": 742
     },
     {
-        "name": "part of point",
+        "name": "choc-removal surgery",
         "code": 453331,
         "fee": 348
     },
     {
-        "name": "case of company",
+        "name": "chocolate biopsy",
         "code": 971577,
         "fee": 48
     },
     {
-        "name": "hand of life",
+        "name": "chocoscopy",
         "code": 882270,
         "fee": 400
     },
     {
-        "name": "time of place",
+        "name": "abdomen choc-surgery",
         "code": 307471,
         "fee": 114
     },
     {
-        "name": "problem of thing",
+        "name": "dental choc-removal",
         "code": 926773,
         "fee": 552
     },
     {
-        "name": "government of number",
+        "name": "choc-infection treatment",
         "code": 807435,
         "fee": 170
     },
     {
-        "name": "eye of point",
+        "name": "chocolate scan",
         "code": 453683,
         "fee": 152
     },
     {
-        "name": "place of person",
+        "name": "chocolate prevention program",
         "code": 612011,
         "fee": 735
     },
     {
-        "name": "fact  of hand",
+        "name": "chocolate overdose treatment",
         "code": 353442,
         "fee": 974
     },
     {
-        "name": "part of part",
+        "name": "choc-relief",
         "code": 750697,
         "fee": 388
     },
     {
-        "name": "child of way",
+        "name": "neural-choc treatment",
+        "code": 350697,
+        "fee": 672
+    },
+    {
+        "name": "chocolate detox",
+        "code": 950671,
+        "fee": 191
+    },
+    {
+        "name": "choc-mobility program",
+        "code": 882194,
+        "fee": 918
+    },
+    {
+        "name": "choc-wellness care",
+        "code": 432447,
+        "fee": 826
+    },
+    {
+        "name": "choc-infected eye recovery",
+        "code": 333081,
+        "fee": 328
+    },
+    {
+        "name": "choc-weight reduction",
         "code": 355358,
         "fee": 733
     }

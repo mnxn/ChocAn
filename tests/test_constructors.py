@@ -91,7 +91,7 @@ class TestConstructors(unittest.TestCase):
         fee = Decimal("123.45")
 
         with self.assertRaises(ValueError, msg="name too long"):
-            service.Service("a" * 21, code, fee)
+            service.Service("a" * 31, code, fee)
 
         with self.assertRaises(ValueError, msg="code too short"):
             service.Service(name, 1, fee)

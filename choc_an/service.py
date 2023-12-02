@@ -9,8 +9,8 @@ class Service:
     fee: Decimal
 
     def __init__(self, name: str, code: int, fee: Decimal) -> None:
-        if len(name) > 20:
-            raise ValueError("name cannot have more than 20 characters")
+        if len(name) > 30:
+            raise ValueError("name cannot have more than 30 characters")
         if len(str(code)) != 6:
             raise ValueError("code must be 6 digits long")
         if fee > Decimal("999.99"):
